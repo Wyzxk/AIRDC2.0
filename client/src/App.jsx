@@ -1,12 +1,13 @@
 import react from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-
 import Home from "./pages/Home";
-import Activate from "./pages/Activate";
-import Login from "./pages/Login";
-import ResetPassword from "./pages/ResetPassword";
-import ResetPasswordConfirm from "./pages/ResetPasswordConfirm";
-import Singup from "./pages/Singup";
+import Product from "./pages/Product";
+import Contact from "./pages/Contact";
+import Activate from "./authPages/Activate";
+import Login from "./authPages/Login";
+import ResetPassword from "./authPages/ResetPassword";
+import ResetPasswordConfirm from "./authPages/ResetPasswordConfirm";
+import Signup from "./authPages/Signup";
 import Layout from "./hocs/Layout";
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
       <Layout>
         <Routes>
           <Route exact path="/" Component={Home} />
+          <Route exact path="/contactanos" Component={Contact} />
           <Route exact path="/activate/:uid/:token" Component={Activate} />
           <Route exact path="/login" Component={Login} />
           <Route exact path="/reset-password" Component={ResetPassword} />
@@ -23,7 +25,8 @@ function App() {
             path="/password/reset/confirm/:uid/:token"
             Component={ResetPasswordConfirm}
           />
-          <Route exact path="/singup" Component={Singup} />
+          <Route exact path="/signup" Component={Signup} />
+          <Route exact path="/productos" Component={Product} />
         </Routes>
       </Layout>
     </Router>

@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
+from datetime import timedelta
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -42,6 +44,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'accounts',
     "corsheaders",
+    "products"
 ]
 
 MIDDLEWARE = [
@@ -60,7 +63,7 @@ ROOT_URLCONF = 'core.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR,'build')],
+        'DIRS': [os.path.join(BASE_DIR,'client')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -130,18 +133,18 @@ EMAIL_HOST = "smtp.gmail.com"
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = "tkg.jhoncaro@gmail.com" 
-EMAIL_HOST_PASSWORD = "hwuw oxbo rssa nqba"  
+EMAIL_HOST_PASSWORD = "vqqn kiik epvn rxnj"  
 
 # Static
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR,'build/static')
+    os.path.join(BASE_DIR,'client/dist'),
 ]
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSIONS_CLASSES': [
+    'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated'
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -149,8 +152,11 @@ REST_FRAMEWORK = {
     ),
 }
 
+DOMAIN = config('DOMAIN')  # Se asume que 'DOMAIN' es el nombre de la variable de entorno o del archivo .env
+SITE_NAME = config('SITE_NAME')
+
 DJOSER = {
-   'LOGIN_FIELD': 'email',
+   'LOGIN_FIELD': 'username',
    'USER_CREATE_PASSWORD_RETYPE': True,
    'USERNAME_CHANGED_EMAIL_CONFIRMATION': True,
    'PASSWORD_CHANGED_EMAIL_CONFIRMATION': True,
@@ -171,6 +177,8 @@ DJOSER = {
 
 SIMPLE_JWT = {
    'AUTH_HEADER_TYPES': ('JWT',),
+   'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
+   'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
 }
 
 # Default primary key field type
@@ -178,7 +186,7 @@ SIMPLE_JWT = {
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = 'accounts.UserAccount'
+# AUTH_USER_MODEL = 'accounts.UserAccount'
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173"

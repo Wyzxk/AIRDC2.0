@@ -1,3 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Protest+Strike&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+h1{
+    font-family: 'Protest Strike', sans-serif;
+  }
+
+*{
+    font-size: 17px;
+    font-family: "Roboto", sans-serif;
+  }
+
+footer{
+    color: white;
+    font-family: "Roboto", sans-serif;
+}
+
+footer h1{
+    font-family: 'Protest Strike', sans-serif;
+}
+
+.fail{
+    min-height: 650px;
+}
+
+.image-bestProducts{
+    min-height: 632px;
+}
+.flex:hover{
+    overflow-y: hidden;
+}
+.maximize-img {
+    min-height: 600px; /* Establece la altura máxima al 100% del alto de la ventana */
+    width: auto; /* Permite que el ancho se ajuste automáticamente */
+    display: block; /* Hace que la imagen sea un bloque para aplicar estilos */
+    margin: 0 auto; /* Centra la imagen horizontalmente */
+  }
+  

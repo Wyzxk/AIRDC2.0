@@ -17,9 +17,18 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include, re_path
 from django.views.generic import TemplateView
+from django.shortcuts import render
+
+
+def index_view(request, uid=None, token=None):
+    return render(request,'dist/index.html')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('auth/', include('accounts.urls'))
+    path('auth/', include('accounts.urls')),
+    path("", index_view, name='index'),
+    path("login/", index_view, name='login'),
+    path("reset-password/", index_view, name='reset-password'),
+    path("password/reset/confirm/<str:uid>/<str:token>/", index_view, name='reset-password'),
 ]
-urlpatterns += [re_path(r'^.*',TemplateView.as_view(template_name='index.html'))]
+# urlpatterns += [re_path(r'^.*',TemplateView.as_view(template_name='index.html'))]
