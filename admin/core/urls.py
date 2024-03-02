@@ -26,6 +26,7 @@ def index_view(request, uid=None, token=None):
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/', include('accounts.urls')),
+    path('api/', include('products.urls')),
     path("", index_view, name='index'),
     path("login/", index_view, name='login'),
     path("reset-password/", index_view, name='reset-password'),

@@ -10,11 +10,11 @@ const Signup = () => {
   const state = useSelector((state) => state.auth);
   const { loading, error, isAuthenticate, user } = state;
 
-  // useEffect(() => {
-  //   if (isAuthenticate && user) {
-  //     navigate("/");
-  //   }
-  // }, [isAuthenticate, user]);
+  useEffect(() => {
+    if (isAuthenticate && user) {
+      navigate("/");
+    }
+  }, [isAuthenticate, user]);
 
   const [formData, setFormData] = useState({
     username: "",
@@ -84,7 +84,7 @@ const Signup = () => {
           placeholder="Nombre"
           // Add "value" at object data
           className="bg-slate-700 rounded-lg block w-full mb-3 p-2"
-          // value={username}
+          value={username}
           name="username"
           onChange={(e) => onChangeUser(e)}
         />
@@ -93,7 +93,7 @@ const Signup = () => {
           placeholder="Contraseña"
           className="bg-slate-700 rounded-lg block w-full mb-3 p-2"
           name="password"
-          // value={password}
+          value={password}
           onChange={(e) => onChange(e)}
           minLength="6"
           required
@@ -103,7 +103,7 @@ const Signup = () => {
           placeholder="Confirmar contraseña"
           className="bg-slate-700 rounded-lg block w-full mb-3 p-2"
           name="re_password"
-          // value={re_password}
+          value={re_password}
           onChange={(e) => onChange(e)}
           minLength="6"
           required
@@ -118,7 +118,7 @@ const Signup = () => {
       </form>
       <p>
         ¿Aún no tienes cuenta?
-        <Link to="/singup"> Registrate</Link>
+        <Link to="/signup"> Registrate</Link>
       </p>
       <p>
         <Link to="/reset-password"> ¿Olvidaste tu contraseña?</Link>

@@ -43,8 +43,8 @@ INSTALLED_APPS = [
     'djoser',
     'rest_framework',
     'accounts',
-    "corsheaders",
-    "products"
+    'corsheaders',
+    'products',
 ]
 
 MIDDLEWARE = [
@@ -142,7 +142,10 @@ STATICFILES_DIRS = [
 ]
 # STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
+# CORS
+CORS_ALLOWED_ORIGINS = ['http://localhost:5173']
 
+#REST FRAMEWORK 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated'
