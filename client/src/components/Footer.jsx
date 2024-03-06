@@ -17,11 +17,11 @@ function Footer() {
                 automotrices, manten tu auto fresco con nosotros.
               </p>
               <div className="flex mt-8 space-x-6 text-gray-600">
-                {/* Enlaces a redes sociales */}
+                {/* Social media links */}
               </div>
             </div>
             <div className="grid grid-cols-1 gap-8 lg:col-span-2 sm:grid-cols-2 lg:grid-cols-4 pt-10">
-              {/* Sección Acerca de AIRDC */}
+              {/* About AIRDC Section*/}
               <div>
                 <h1 className="font-medium">Acerca de AIRDC</h1>
                 <nav className="flex flex-col mt-4 space-y-2 text-sm text-gray-500">
@@ -30,7 +30,7 @@ function Footer() {
                   </a>
                 </nav>
               </div>
-              {/* Sección Dirección */}
+              {/* Address Section */}
               <div>
                 <h1 className="font-medium">Dirección</h1>
                 <nav className="flex flex-col mt-4 space-y-2 text-sm text-gray-500">
@@ -43,7 +43,7 @@ function Footer() {
                   </a>
                 </nav>
               </div>
-              {/* Sección WhatsApp */}
+              {/* WhatsApp Section */}
               <div>
                 <h1 className="font-medium">WhatsApp</h1>
                 <nav className="flex flex-col mt-4 space-y-2 text-sm text-gray-500">

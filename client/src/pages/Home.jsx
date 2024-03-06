@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
 import "../styles/index.css";
+import { ContactForm } from "../components/ContactForm";
 
 const Home = () => {
   const images = [
@@ -233,86 +234,7 @@ const Home = () => {
       {/* End Container */}
 
       {/* Container */}
-      <div className="min-h-screen items-center justify-center bg-gray-100  flex-col grid grid-cols-1">
-        <h1 className="mt-14 text-5xl text-center font-bold text-gray-800">
-          Contactanos
-        </h1>
-        <p className="mt-3 text-center">
-          Envíanos un mensaje con tus dudas e inquietudes
-        </p>
-        <div className="flex items-center justify-center p-10 bg-gray-100">
-          <div className="mx-auto w-full max-w-[550px] bg-white rounded-lg shadow-lg p-8">
-            <form action="https://formbold.com/s/FORM_ID" method="POST">
-              <div className="mb-5">
-                <label
-                  htmlFor="name"
-                  className="mb-3 block text-base font-medium text-[#07074D]"
-                >
-                  Nombre Completo
-                </label>
-                <input
-                  type="text"
-                  name="name"
-                  id="name"
-                  placeholder="Nombre Completo"
-                  className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                />
-              </div>
-              <div className="mb-5">
-                <label
-                  htmlFor="email"
-                  className="mb-3 block text-base font-medium text-[#07074D]"
-                >
-                  Correo Electrónico
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  id="email"
-                  placeholder="TuCorreoElectronico@gmail.com"
-                  className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                />
-              </div>
-              <div className="mb-5">
-                <label
-                  htmlFor="subject"
-                  className="mb-3 block text-base font-medium text-[#07074D]"
-                >
-                  Tema
-                </label>
-                <input
-                  type="text"
-                  name="subject"
-                  id="subject"
-                  placeholder="Escribenos el tema de lo que quieras comentarnos"
-                  className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                />
-              </div>
-              <div className="mb-5">
-                <label
-                  htmlFor="message"
-                  className="mb-3 block text-base font-medium text-[#07074D]"
-                >
-                  Mensaje
-                </label>
-                <textarea
-                  rows="4"
-                  name="message"
-                  id="message"
-                  placeholder="Escribenos tu mensaje!"
-                  className="w-full resize-none rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                ></textarea>
-              </div>
-              <div>
-                <button className="hover:shadow-form rounded-md bg-[#6A64F1] py-3 px-8 text-base font-semibold text-white outline-none">
-                  Enviar
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-      {/* End Container */}
+      <ContactForm />
     </>
   );
 };

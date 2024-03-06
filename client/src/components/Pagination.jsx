@@ -1,40 +1,40 @@
 import React, { useEffect } from "react";
 
 export function Pagination({ nPages, currentPage, setCurrentPage }) {
-  // Este efecto se ejecuta cuando cambia el número de páginas (nPages).
-  // Establece la página actual en 1 cuando el número de páginas cambia.
+  // This effect runs when the number of pages (nPages) changes.
+  // It sets the current page to 1 when the number of pages changes.
   useEffect(() => {
     setCurrentPage(1);
   }, [nPages]);
 
-  // Función para avanzar a la siguiente página
+  // Function to move to the next page
   const next = () => {
     if (currentPage !== nPages) setCurrentPage(currentPage + 1);
   };
 
-  // Función para retroceder a la página anterior
+  // Function to move to the previous page
   const prev = () => {
     if (currentPage !== 1) setCurrentPage(currentPage - 1);
   };
 
-  // Maneja el click en un número de página específico
+  // Handles click on a specific page number
   const handlePageClick = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
 
-  // Genera los números de página y los almacena en el array pageNumbers
+  // Generates the page numbers and stores them in the pageNumbers array
   const pageNumbers = [];
   for (let i = 1; i <= nPages; i++) {
     pageNumbers.push(
       <p
         key={i}
-        // Determina las clases CSS en función de si la página actual es igual a i
+        // Determines CSS classes based on whether the current page is equal to i
         className={`text-sm font-medium leading-none cursor-pointer ${
           currentPage === i
             ? "text-sm font-medium leading-none cursor-pointer text-indigo-700 border-t border-indigo-400 pt-3 mr-4 px-2"
             : "text-gray-600 hover:text-indigo-700 border-t border-transparent hover:border-indigo-400"
         } pt-3 mr-4 px-2`}
-        // Llama a la función handlePageClick con el número de página correspondiente cuando se hace clic
+        // Calls the handlePageClick function with the corresponding page number when clicked
         onClick={() => handlePageClick(i)}
       >
         {i}
@@ -42,7 +42,7 @@ export function Pagination({ nPages, currentPage, setCurrentPage }) {
     );
   }
 
-  // Devuelve el componente de paginación
+  // Returns the pagination component
   return (
     <div className="flex items-center justify-center py-10 lg:px-0 sm:px-6 px-4">
       <div className="lg:w-3/5 w-full  flex items-center justify-between border-t border-gray-200">

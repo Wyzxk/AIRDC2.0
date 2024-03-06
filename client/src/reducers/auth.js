@@ -100,7 +100,7 @@ export const checkAuthenticated = createAsyncThunk(
 
 export const reset_password = createAsyncThunk(
   "auth/reset_password",
-  async (formData) => {
+  async (formData, { rejectWithValue }) => {
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -112,31 +112,44 @@ export const reset_password = createAsyncThunk(
         formData,
         config
       );
+      // Retorna los datos exitosos si la solicitud es exitosa
+      return res.data;
     } catch (err) {
-      console.log("Error response:", err.response);
+      // Retorna el error usando rejectWithValue para que Redux lo maneje
+      return rejectWithValue(err.response.data);
     }
   }
 );
 
 export const reset_password_confirm = createAsyncThunk(
   "auth/reset_password_confirm",
-  async (formData) => {
+  async (formData, { rejectWithValue }) => {
     const config = {
       headers: {
         "Content-Type": "application/json",
       },
     };
-    const res = await axios.post(
-      "http://127.0.0.1:8000/auth/users/reset_password_confirm/",
-      formData,
-      config
-    );
+
+    try {
+      const res = await axios.post(
+        "http://127.0.0.1:8000/auth/users/reset_password_confirm/",
+        formData,
+        config
+      );
+
+      // Retorna los datos exitosos si la solicitud es exitosa
+      return res.data;
+    } catch (err) {
+      console.log(err);
+      // Retorna el error usando rejectWithValue para que Redux lo maneje
+      return rejectWithValue(err.response.data);
+    }
   }
 );
 
 export const signup = createAsyncThunk(
   "auth/signup",
-  async (formData, { dispatch }) => {
+  async (formData, { rejectWithValue }) => {
     const config = {
       headers: { "Content-type": "application/json" },
     };
@@ -146,35 +159,31 @@ export const signup = createAsyncThunk(
         formData,
         config
       );
-      const data = {
-        username: formData.email,
-        password: formData.password,
-      };
-      dispatch(login(data));
-      return res.data;
     } catch (err) {
-      console.log(err);
-      console.log(formData);
+      return rejectWithValue(err.response.data);
     }
   }
 );
 
-export const verify = createAsyncThunk("auth/verify", async (token) => {
-  const config = {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  };
-  try {
-    const res = await axios.post(
-      "http://127.0.0.1:8000/auth/users/activation/",
-      token,
-      config
-    );
-  } catch (err) {
-    console.log(err);
+export const verify = createAsyncThunk(
+  "auth/verify",
+  async (token, { rejectWithValue }) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    try {
+      const res = await axios.post(
+        "http://127.0.0.1:8000/auth/users/activation/",
+        token,
+        config
+      );
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
   }
-});
+);
 
 const auth = createSlice({
   name: "auth",
@@ -212,7 +221,7 @@ const auth = createSlice({
         state.isAuthenticate = false;
         state.user = null;
         if (action.error.message === "Request failed with status code 401") {
-          state.error = "Acceso denegado";
+          state.error = "Los datos ingresados son incorrectos";
         } else {
           state.error = action.error.message;
         }
@@ -232,23 +241,53 @@ const auth = createSlice({
       .addCase(checkAuthenticated.rejected, (state) => {
         state.isAuthenticate = false;
       })
+      .addCase(reset_password.pending, (state) => {
+        state.reset_passwordLoading = true;
+      })
       .addCase(reset_password.fulfilled, (state) => {
-        state.reset_password = true;
+        state.reset_passwordLoading = false;
+        state.reset_passwordFalse = false;
+        state.reset_passwordTrue = true;
       })
       .addCase(reset_password.rejected, (state) => {
-        state.reset_password = false;
+        state.reset_passwordLoading = false;
+        state.reset_passwordFalse = true;
+        state.reset_passwordTrue = false;
+      })
+      .addCase(reset_password_confirm.pending, (state) => {
+        state.reset_password_confirmStateLoading;
+        state.reset_password_confirmStateTrue = false;
+        state.reset_password_confirmStateFalse = false;
       })
       .addCase(reset_password_confirm.fulfilled, (state) => {
-        state.reset_password_confirm = true;
+        state.reset_password_confirmStateTrue = true;
+        state.reset_password_confirmStateFalse = false;
       })
       .addCase(reset_password_confirm.rejected, (state) => {
-        state.reset_password_confirm = false;
+        state.reset_password_confirmStateTrue = false;
+        state.reset_password_confirmStateFalse = true;
+      })
+      .addCase(signup.pending, (state, action) => {
+        state.signupStateLoad = true;
       })
       .addCase(signup.fulfilled, (state, action) => {
-        state.signup = true;
+        state.signupStateLoad = false;
+        state.signupState = true;
       })
-      .addCase(signup.rejected, (state) => {
-        state.signup = false;
+      .addCase(signup.rejected, (state, action) => {
+        state.signupStateLoad = false;
+        state.signupState = action.payload;
+      })
+      .addCase(verify.pending, (state, action) => {
+        state.verifyLoading = true;
+      })
+      .addCase(verify.rejected, (state, action) => {
+        state.verifyLoading = false;
+        state.verifyStateRejected = true;
+      })
+      .addCase(verify.fulfilled, (state, action) => {
+        state.verifyLoading = false;
+        state.verifyState = true;
       });
   },
 });

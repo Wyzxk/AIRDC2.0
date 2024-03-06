@@ -5,38 +5,43 @@ import { Pagination } from "../components/Pagination";
 import { useState, useEffect } from "react";
 
 function Product({ categories, selectedCategory, onSelectCategory }) {
-  const [productsQT, setProductsQT] = useState(8);
-  const [currentPage, setCurrentPage] = useState(1);
-  const indexEnd = currentPage * productsQT;
-  const indexStart = indexEnd - productsQT;
-  const [products, setProducts] = useState([]);
-  const [search, setSearch] = useState("");
+  const [productsQT, setProductsQT] = useState(8); // Number of products per page
+  const [currentPage, setCurrentPage] = useState(1); // Current page
+  const indexEnd = currentPage * productsQT; // Index of the last product to display
+  const indexStart = indexEnd - productsQT; // Index of the first product to display
+  const [products, setProducts] = useState([]); // Array of products
+  const [search, setSearch] = useState(""); // Search query
 
+  // Fetch products from the API when the component mounts
   useEffect(() => {
     async function chargeProducts() {
       const response = await getAllProducts();
       setProducts(response.data);
     }
     chargeProducts();
-    console.log(products);
   }, []);
 
+  // Handler for the search input
   const searcher = (e) => {
     setSearch(e.target.value);
-    console.log(e.target.value);
   };
 
+  // Filter products based on the search query
   const results = !search
     ? products
     : products.filter((product) =>
         product.productName.toLowerCase().includes(search.toLowerCase())
       );
+
+  // Calculate the total number of pages based on the filtered results
   const nPages = Math.ceil(results.length / productsQT);
 
+  // Slice the products array to display only those for the current page
   const showProducts = results.slice(indexStart, indexEnd);
 
   return (
     <>
+      {/* Search Input */}
       <div class="max-w-sm mx-auto">
         <form>
           <div class="relative">
@@ -69,7 +74,7 @@ function Product({ categories, selectedCategory, onSelectCategory }) {
         </form>
       </div>
 
-      {/* Cards de Productos */}
+      {/* Product Cards */}
       <div className="w-4/4 p-4 flex flex-wrap">
         {showProducts.map((product, index) => (
           <CardProduct
@@ -80,7 +85,8 @@ function Product({ categories, selectedCategory, onSelectCategory }) {
           />
         ))}
       </div>
-      {/* pagination */}
+
+      {/* Pagination */}
       <Pagination
         setCurrentPage={setCurrentPage}
         currentPage={currentPage}
@@ -89,4 +95,5 @@ function Product({ categories, selectedCategory, onSelectCategory }) {
     </>
   );
 }
+
 export default Product;
