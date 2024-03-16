@@ -30,7 +30,16 @@ const Login = () => {
   // Handle form submission
   const onSubmit = (e) => {
     e.preventDefault();
-    dispatch(login(formData)).then((result) => {
+    // Convert the username to lowercase
+    const user = username.toLocaleLowerCase();
+
+    // Create a new form data object by spreading the existing form data
+    // and updating the username field with the lowercase version
+    const newFormData = {
+      ...formData,
+      username: user,
+    };
+    dispatch(login(newFormData)).then((result) => {
       if (result.payload) {
         // Reset form data and navigate if successful
         setFormData({
@@ -113,7 +122,7 @@ const Login = () => {
             {/* Submit Button */}
             <button
               type="submit"
-              className="w-full bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+              className="w-full bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
             >
               {loading ? "Entrando..." : "Iniciar Sesión"}
             </button>

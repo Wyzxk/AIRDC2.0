@@ -1,10 +1,10 @@
-import { useDispatch } from "react-redux";
-import { logout } from "../reducers/auth";
 import { useEffect } from "react";
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
 import "../styles/index.css";
 import { ContactForm } from "../components/ContactForm";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 const Home = () => {
   const images = [
@@ -26,14 +26,9 @@ const Home = () => {
     console.log(localStorage.getItem("user"));
   }, []);
 
-  const dispatch = useDispatch();
-
-  const handleClick = () => {
-    dispatch(logout());
-  };
-
   return (
     <>
+      <Navbar />
       <div className="w-full h-full flex justify-center items-center relative fail">
         <div className="w-full mx-auto">
           <ImageGallery
@@ -235,6 +230,7 @@ const Home = () => {
 
       {/* Container */}
       <ContactForm />
+      <Footer />
     </>
   );
 };

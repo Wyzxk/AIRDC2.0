@@ -15,11 +15,7 @@ const Layout = (props) => {
   }, []);
   return (
     <>
-      <div>
-        <Navbar />
-        {props.children}
-        <Footer />
-      </div>
+      <div>{props.children}</div>
     </>
   );
 };

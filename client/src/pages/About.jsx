@@ -1,4 +1,12 @@
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 function About() {
-  return <>Hola</>;
+  return (
+    <>
+      <Navbar />
+      Hola
+      <Footer />
+    </>
+  );
 }
 export default About;

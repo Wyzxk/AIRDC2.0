@@ -144,7 +144,10 @@ STATICFILES_DIRS = [
 # STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # CORS
-CORS_ALLOWED_ORIGINS = ['http://localhost:5173']
+CORS_ALLOWED_ORIGINS = [
+'http://localhost:5173',
+'https://web.postman.co/'
+]
 
 #REST FRAMEWORK 
 REST_FRAMEWORK = {

@@ -1,3 +1,17 @@
+from django.db import models 
+from django.contrib.auth.models import User
+
+class UserAddress(models.Model):
+        user = models.ForeignKey(User, on_delete=models.CASCADE)
+        department = models.CharField(max_length=20)
+        city = models.CharField(max_length=20)
+        neighborhood = models.CharField(max_length=20)
+        cPostal = models.CharField(max_length=10)
+        street = models.CharField(max_length=10)
+        numberStreet = models.CharField(max_length=10)
+        aditionalInfo = models.CharField(max_length=255)
+
+
 # from django.db import models
 # from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 

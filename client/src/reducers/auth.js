@@ -116,6 +116,7 @@ export const reset_password = createAsyncThunk(
       return res.data;
     } catch (err) {
       // Retorna el error usando rejectWithValue para que Redux lo maneje
+      console.log(err);
       return rejectWithValue(err.response.data);
     }
   }
@@ -211,6 +212,7 @@ const auth = createSlice({
         state.access = access;
         state.refresh = refresh;
         state.loading = false;
+        state.error = false;
       })
       .addCase(login.rejected, (state, action) => {
         state.loading = false;

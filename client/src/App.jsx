@@ -1,9 +1,10 @@
-import react from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Product from "./pages/Product";
 import Contact from "./pages/Contact";
 import About from "./pages/About";
+import AuthProfile from "./pages/AuthProfile";
+
 import Activate from "./authPages/Activate";
 import Login from "./authPages/Login";
 import ResetPassword from "./authPages/ResetPassword";
@@ -27,7 +28,10 @@ function App() {
             Component={ResetPasswordConfirm}
           />
           <Route exact path="/signup" Component={Signup} />
+          <Route exact path="/profile" Component={AuthProfile} />
+
           <Route exact path="/productos" Component={Product} />
+          <Route exact path="/nosotros" Component={About} />
         </Routes>
       </Layout>
     </Router>

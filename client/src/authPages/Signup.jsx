@@ -219,14 +219,14 @@ const Signup = () => {
             {/* Signup Button */}
             <button
               type="submit"
-              className="w-full bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+              className="w-full bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
             >
               {signupStateLoad ? "Verificando datos..." : "Registrarse"}
             </button>
             {/* Signup Option */}
             <p className="mt-4 text-center">
-              ¿Aún no tienes cuenta?
-              <Link to="/signup"> Registrate</Link>
+              ¿Ya tienes una cuenta?
+              <Link to="/login"> Inicia Sesión</Link>
             </p>
             {/* Reset Password Option */}
             <p className="text-center">
