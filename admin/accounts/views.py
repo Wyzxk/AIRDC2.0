@@ -1,9 +1,8 @@
 from django.contrib.auth import get_user_model
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from .models import UserAddress
-from .serializers import userAddressSerializer, UserCreateSerializer
-from django.db.utils import IntegrityError
+from .models import UserAddress,InfoUser
+from .serializers import userAddressSerializer, UserInfoSerializer
 
 @api_view(['GET', 'POST', 'PUT'])
 def insertUserAddress(request):
@@ -84,3 +83,38 @@ def changeUser(request):
             return Response(status=404)
     else:
         Response(status=404)
+        
+        
+@api_view(['GET','POST','PUT'])
+def infoUser(request):
+    if request.method == 'POST':
+        serializer = UserInfoSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(status=200)
+        else: 
+            return Response(serializer.errors, status=400)
+        
+    elif request.method == 'GET':
+        user = request.query_params.get('user')
+        data = InfoUser.objects.filter(user=user)
+        if data.exists():
+            serializer = UserInfoSerializer(data, many=True)
+            return Response(serializer.data, status=200)
+        else:
+            return Response(status=400)
+        
+    elif request.method == 'PUT':
+        user = request.data.get('user')
+        if user:
+            putInfo = InfoUser.objects.get(user=user)
+            serializer = UserInfoSerializer(putInfo,data=request.data,partial=True)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(status=200)
+            else: 
+                return Response(serializer.errors,status=400)
+        else:
+            return Response(status=404)
+    else: 
+        return Response(status=404)

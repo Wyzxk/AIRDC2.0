@@ -49,7 +49,9 @@ export function AddressPage() {
     setDataForm({
       ...dataForm,
       user: state.user.id,
-      [name]: value,
+      [name]: value.toLowerCase().replace(/(?:^|\s)\S/g, function (letra) {
+        return letra.toUpperCase();
+      }),
     });
   };
 

@@ -49,7 +49,9 @@ function AuthProfile() {
               <nav className="bg-white w-80 h-screen flex flex-col gap-10 border-r border-slate-100">
                 {/* Logo */}
                 <div className="logo text-2xl font-bold text-center h-14 flex items-center justify-center">
-                  <h1>AIRDC</h1>
+                  <a href="/">
+                    <h1 className="text-2xl">AIRDC</h1>
+                  </a>
                 </div>
                 {/* User information */}
                 <div className="user flex items-center justify-center flex-col gap-4 border-b border-emerald-slate-50 ">

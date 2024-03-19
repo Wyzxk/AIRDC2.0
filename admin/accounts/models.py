@@ -11,7 +11,16 @@ class UserAddress(models.Model):
         numberStreet = models.CharField(max_length=10)
         aditionalInfo = models.CharField(max_length=255)
 
+class InfoUser(models.Model):
+        user = models.ForeignKey(User, on_delete=models.CASCADE)
+        names = models.CharField(max_length=50)
+        lastNames = models.CharField(max_length=50)
+        phone = models.CharField(max_length=10)
+        residenceCity = models.CharField(max_length=20)
+        typeId = models.CharField(max_length=3)
+        numberId = models.IntegerField()
 
+        
 # from django.db import models
 # from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 
