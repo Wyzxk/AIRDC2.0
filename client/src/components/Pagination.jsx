@@ -79,14 +79,14 @@ export function Pagination({ nPages, currentPage, setCurrentPage }) {
               strokeLinejoin="round"
             />
           </svg>
-          <p className="text-sm ml-3 font-medium leading-none">Previous</p>
+          <p className="text-sm ml-3 font-medium leading-none">Anterior</p>
         </div>
         <div className="sm:flex hidden">{pageNumbers}</div>
         <div
           className="flex items-center pt-3 text-gray-600 hover:text-indigo-700 cursor-pointer"
           onClick={next}
         >
-          <p className="text-sm font-medium leading-none mr-3">Next</p>
+          <p className="text-sm font-medium leading-none mr-3">Siguiente</p>
           <svg
             width="14"
             height="8"

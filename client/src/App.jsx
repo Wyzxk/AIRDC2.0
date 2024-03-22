@@ -31,6 +31,7 @@ function App() {
           <Route exact path="/profile" Component={AuthProfile} />
 
           <Route exact path="/productos" Component={Product} />
+          <Route exact path="/productos/:id" Component={Product} />
           <Route exact path="/nosotros" Component={About} />
         </Routes>
       </Layout>

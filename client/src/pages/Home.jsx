@@ -68,6 +68,7 @@ const Home = () => {
           Los productos más destacados <br />
           de nosotros
         </h1>
+        {/* scroll aqui overflow x */}
         <div className="flex overflow-x-auto px-4">
           {/* Tarjeta 1 */}
           <div className="mx-2 my-2 flex-none max-w-xs sm:max-w-sm md:max-w-md lg:max-w-md xl:max-w-md">
@@ -145,6 +146,7 @@ const Home = () => {
         </div>
       </div>
       {/* End Container */}
+
       {/* Container */}
       <div className="min-h-screen flex items-center justify-center bg-gray-100 flex-col pb-20">
         <h1 className="mt-14 text-5xl text-center font-bold mb-20 text-gray-800">
@@ -214,12 +216,6 @@ const Home = () => {
                     misión es asegurarnos de que tu viaje sea siempre fresco y
                     agradable.
                   </p>
-                  <a
-                    href="#"
-                    className="text-lg font-bold text-blue-600 hover:text-blue-800"
-                  >
-                    Productos
-                  </a>
                 </div>
               </div>
             </div>

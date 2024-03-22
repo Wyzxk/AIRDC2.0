@@ -4,7 +4,28 @@ function About() {
   return (
     <>
       <Navbar />
-      Hola
+      <h1 className="text-center text-4xl">Hola nosotros</h1>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
       <Footer />
     </>
   );

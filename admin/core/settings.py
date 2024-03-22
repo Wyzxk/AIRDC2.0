@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 import os
 from datetime import timedelta
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -157,6 +158,9 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
 }
+
+DOMAIN = config('DOMAIN')  # Se asume que 'DOMAIN' es el nombre de la variable de entorno o del archivo .env
+SITE_NAME = config('SITE_NAME')
 
 DJOSER = {
    'LOGIN_FIELD': 'username',

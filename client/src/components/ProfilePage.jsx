@@ -165,7 +165,7 @@ export function ProfilePage() {
           {/* Input field for user's names */}
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-semibold mb-2">
-              Nombres
+              Nombres *
               {/* Display error message if names are not entered correctly */}
               {message.names && (
                 <p className="text-red-500 text-xs font-semibold mt-2">
@@ -314,7 +314,7 @@ export function ProfilePage() {
             {/* Button to submit form for updating profile information */}
             <button
               type="submit"
-              className="bg-black text-white px-20 py-2 rounded-lg hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+              className="mt-10 bg-black text-white px-20 py-2 rounded-lg hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
             >
               {/* Conditional rendering of button text based on message state */}
               {message === "Enviando..." ? message : "Enviar"}
