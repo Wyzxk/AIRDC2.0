@@ -1,4 +1,5 @@
-import { getAllProducts } from "../Api/Products";
+import { getAllProductsClient } from "../Api/Products";
+import { getIdProducts } from "../Api/Products";
 import { CardProduct } from "../components/CardProduct";
 import { Pagination } from "../components/Pagination";
 import { useParams, useNavigate } from "react-router-dom";
@@ -6,6 +7,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { useState, useEffect } from "react";
 import { SeeProduct } from "../components/SeeProduct";
+import { ProductInfo } from "../components/ProductInfo/ProductInfo";
 
 function Product() {
   const [productsQT, setProductsQT] = useState(8); // Number of products per page
@@ -18,13 +20,21 @@ function Product() {
   const navigate = useNavigate();
   // Fetch products from the API when the component mounts
   useEffect(() => {
-    async function chargeProducts() {
-      const response = await getAllProducts();
-      setProducts(response.data);
+    if (params.id) {
+      console.log(params.id);
+      async function chargeIdProduct() {
+        const response = await getIdProducts(params.id);
+        setProducts(response.data);
+      }
+      chargeIdProduct();
+    } else {
+      async function chargeProducts() {
+        const response = await getAllProductsClient();
+        setProducts(response.data);
+      }
+      chargeProducts();
     }
-    chargeProducts();
-  }, []);
-
+  }, [params.id]);
   // Handler for the search input
   const searcher = (e) => {
     setSearch(e.target.value);
@@ -43,16 +53,25 @@ function Product() {
   // Slice the products array to display only those for the current page
   const showProducts = results.slice(indexStart, indexEnd);
 
-  const see = (id) => {
-    console.log("hola");
-    // navigate(`/productos/${id}`);
+  const see = () => {
+    console.log(products);
   };
 
   return (
     <>
       <Navbar />
       {params.id ? (
-        <h1>{params.id}</h1>
+        <>
+          {products[0] && (
+            <ProductInfo
+              name={products[0].productName}
+              price={products[0].productPrice}
+              stock={products[0].productStock}
+              description={products[0].productDescription}
+              image={products[0].productImageUrl}
+            />
+          )}
+        </>
       ) : (
         <>
           {/* Search Input */}
@@ -95,6 +114,7 @@ function Product() {
                 index={product.id}
                 name={product.productName}
                 price={product.productPrice}
+                image={product.productImageUrl}
                 onClick={() => see(product.id)}
               />
             ))}

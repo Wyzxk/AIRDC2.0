@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Navbar as Nav } from "flowbite-react";
 import { useSelector, useDispatch } from "react-redux";
 import { AddressPage } from "../components/AddressPage";
@@ -7,16 +7,21 @@ import { ProfilePage } from "../components/ProfilePage";
 
 import { logout } from "../reducers/auth";
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link, redirect, useNavigate } from "react-router-dom";
 function AuthProfile() {
   // Using useSelector hook to access the state from the Redux store
   const state = useSelector((state) => state.auth);
-
-  // Using useState hook to manage the current page state
-  const [page, setPage] = useState("perfil");
-
   // Destructuring user object from the state
-  const { user } = state;
+  const { user, isAuthenticate, isStaff } = state;
+  // Using useState hook to manage the current page state
+  const [page, setPage] = useState(isStaff === true ? "contraseña" : "perfil");
+  useEffect(() => {
+    if (isAuthenticate === false) {
+      navigate("/");
+    }
+    console.log(isStaff + "hola");
+  }, [isAuthenticate, user]);
+
   // Using useNavigate hook to navigate
   const navigate = useNavigate();
 
@@ -75,39 +80,47 @@ function AuthProfile() {
                 </div>
                 {/* Navigation links */}
                 <ul className="px-6 space-y-2">
-                  <li>
-                    <a
-                      className="text-center block px-4 py-2.5  font-semibold  hover:bg-gray-900 text-white rounded-lg bg-black"
-                      href="#"
-                      onClick={() => {
-                        handlePage("perfil");
-                      }}
-                    >
-                      Mi perfil
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      className="text-center block px-4 py-2.5  font-semibold  hover:bg-gray-900 text-white rounded-lg bg-black"
-                      href="#"
-                      onClick={() => {
-                        handlePage("direccion");
-                      }}
-                    >
-                      Dirección de envíos
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      className="text-center block px-4 py-2.5  font-semibold  hover:bg-gray-900 text-white rounded-lg bg-black"
-                      href="#"
-                      onClick={() => {
-                        handlePage("tarjetas");
-                      }}
-                    >
-                      Mis tarjetas
-                    </a>
-                  </li>
+                  {isStaff === false && (
+                    <li>
+                      <a
+                        className="text-center block px-4 py-2.5  font-semibold  hover:bg-gray-900 text-white rounded-lg bg-black"
+                        href="#"
+                        onClick={() => {
+                          handlePage("perfil");
+                        }}
+                      >
+                        Mi perfil
+                      </a>
+                    </li>
+                  )}
+
+                  {isStaff === false && (
+                    <li>
+                      <a
+                        className="text-center block px-4 py-2.5  font-semibold  hover:bg-gray-900 text-white rounded-lg bg-black"
+                        href="#"
+                        onClick={() => {
+                          handlePage("direccion");
+                        }}
+                      >
+                        Dirección de envíos
+                      </a>
+                    </li>
+                  )}
+                  {isStaff === true && (
+                    <li>
+                      <a
+                        className="text-center block px-4 py-2.5  font-semibold  hover:bg-gray-900 text-white rounded-lg bg-black"
+                        href="#"
+                        onClick={() => {
+                          navigate("/manageproducts");
+                        }}
+                      >
+                        Administrar productos
+                      </a>
+                    </li>
+                  )}
+
                   <li>
                     <a
                       className="text-center block px-4 py-2.5  font-semibold  hover:bg-gray-900 text-white rounded-lg bg-black"
@@ -116,9 +129,10 @@ function AuthProfile() {
                         handlePage("contraseña");
                       }}
                     >
-                      Cambiar contraseña
+                      Configuración
                     </a>
                   </li>
+
                   <li>
                     <a
                       className="text-center block px-4 py-2.5  font-semibold  hover:bg-gray-900 text-white rounded-lg bg-black"

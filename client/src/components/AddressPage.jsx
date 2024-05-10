@@ -114,6 +114,7 @@ export function AddressPage() {
               name="department"
               minLength={3}
               maxLength={20}
+              placeholder="Departamento"
               defaultValue={userAddress.department}
             />
           </div>
@@ -135,6 +136,7 @@ export function AddressPage() {
               onChange={onChange}
               defaultValue={userAddress.city}
               minLength={3}
+              placeholder="Ciudad"
               maxLength={20}
             />
           </div>
@@ -157,6 +159,7 @@ export function AddressPage() {
               defaultValue={userAddress.neighborhood}
               minLength={3}
               maxLength={20}
+              placeholder="Barrio"
             />
           </div>
           {/* cPostal */}
@@ -178,6 +181,7 @@ export function AddressPage() {
               defaultValue={userAddress.cPostal}
               minLength={3}
               maxLength={10}
+              placeholder="Código postal"
             />
           </div>
           {/* street */}
@@ -199,6 +203,7 @@ export function AddressPage() {
               defaultValue={userAddress.street}
               minLength={3}
               maxLength={10}
+              placeholder="Calle"
             />
           </div>
           {/* numberStreet */}
@@ -220,6 +225,7 @@ export function AddressPage() {
               defaultValue={userAddress.numberStreet}
               minLength={3}
               maxLength={10}
+              placeholder="Número de calle"
             />
           </div>
           {/* aditionalInfo */}
@@ -240,6 +246,7 @@ export function AddressPage() {
               onChange={onChange}
               defaultValue={userAddress.aditionalInfo}
               maxLength={255}
+              placeholder="Información adicional"
             />
           </div>
           <div className="mt-4">

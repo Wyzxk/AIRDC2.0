@@ -118,46 +118,6 @@ export function ProfilePage() {
   };
   return (
     <>
-      {/* Form for changing user */}
-      <form
-        onSubmit={onSubmitName}
-        className="flex flex-wrap justify-center mb-12"
-      >
-        {/* Input field for new username */}
-        <div className="mb-4 w-full sm:w-1/2 sm:pr-2">
-          <label className="block text-gray-700 text-sm font-semibold mb-2">
-            Usuario *
-            <p className="text-gray-600 text-xs">
-              Recuerda el usuario, ingresarás con él
-            </p>
-          </label>
-          <input
-            onChange={onChangeName}
-            minLength="4"
-            type="text"
-            className="form-input px-4 py-2 border rounded-lg text-gray-700 focus:ring-blue-500"
-            required
-            placeholder={user ? user.username : ""}
-            name="newUsername"
-          />
-        </div>
-        {/* Button to submit form for changing user */}
-        <div className="w-full sm:w-1/2 sm:pl-2">
-          <button
-            type="submit"
-            className="my-11 mb-4 bg-black text-white px-12 py-2 rounded-lg hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-          >
-            {messageName === "Enviando..." ? messageName : "Cambiar usuario"}
-          </button>
-          {/* Display success message if user is changed successfully */}
-          {messageName === "El usuario se ha cambiado correctamente" && (
-            <p className="text-green-500 text-xs font-semibold mt-2">
-              {messageName}
-            </p>
-          )}
-        </div>
-      </form>
-
       {/* Form for updating user profile information */}
       <form onSubmit={onSubmit}>
         {/* Grid layout for profile information fields */}
@@ -182,7 +142,7 @@ export function ProfilePage() {
               className="form-input  px-4 py-2 border rounded-lg text-gray-700 focus:ring-blue-500"
               // required
               name="names"
-              placeholder="••••••••"
+              placeholder="Nombre completo"
             />
           </div>
           {/* Input field for user's last names */}
@@ -204,7 +164,7 @@ export function ProfilePage() {
               type="text"
               className="form-input  px-4 py-2 border rounded-lg text-gray-700 focus:ring-blue-500"
               // required
-              placeholder="••••••••"
+              placeholder="Apellido completo"
               name="lastNames"
             />
           </div>
@@ -225,7 +185,7 @@ export function ProfilePage() {
               maxLength={10}
               onChange={onChange}
               type="text"
-              placeholder="••••••••"
+              placeholder="Teléfono"
               className="form-input  px-4 py-2 border rounded-lg text-gray-700 focus:ring-blue-500"
               // required
               name="phone"
@@ -247,7 +207,7 @@ export function ProfilePage() {
               maxLength={20}
               onChange={onChange}
               type="text"
-              placeholder="••••••••"
+              placeholder="Ciudad actual"
               className="form-input  px-4 py-2 border rounded-lg text-gray-700 focus:ring-blue-500"
               // required
               name="residenceCity"
@@ -303,7 +263,7 @@ export function ProfilePage() {
               maxLength={30}
               onChange={onChange}
               type="text"
-              placeholder="••••••••"
+              placeholder="Número de identificación"
               className="form-input  px-4 py-2 border rounded-lg text-gray-700 focus:ring-blue-500"
               // required
               name="numberId"

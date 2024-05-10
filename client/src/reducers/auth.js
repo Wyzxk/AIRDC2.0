@@ -4,9 +4,11 @@ import axios from "axios";
 const initialState = {
   access: localStorage.getItem("access"),
   refresh: localStorage.getItem("refresh"),
-  isAuthenticate: false,
+  isAuthenticate: null,
+  isStaff: null,
   user: null,
   loading: false,
+  cart: null,
 };
 
 export const userLoaded = createAsyncThunk(
@@ -32,6 +34,7 @@ export const userLoaded = createAsyncThunk(
             config
           );
           dispatch(userLoaded.fulfilled(res.data));
+          dispatch(checkStaff(res.data.id));
         } catch (err) {
           dispatch(userLoaded.rejected(err));
         }
@@ -41,7 +44,24 @@ export const userLoaded = createAsyncThunk(
     }, 1);
   }
 );
-
+export const checkStaff = createAsyncThunk("auth/checkStaff", async (id) => {
+  if (localStorage.getItem("access")) {
+    try {
+      const res = await axios.get("http://127.0.0.1:8000/auth/checkStaff/", {
+        params: {
+          id: id,
+        },
+        headers: {
+          Authorization: `JWT ${localStorage.getItem("access")}`,
+        },
+      });
+      console.log(res);
+      return res.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+});
 export const login = createAsyncThunk(
   "auth/loadUser",
   async (formData, { dispatch }) => {
@@ -186,6 +206,25 @@ export const verify = createAsyncThunk(
   }
 );
 
+export const getCart = createAsyncThunk("auth/getCart", async (id) => {
+  if (localStorage.getItem("access")) {
+    try {
+      const res = await axios.get("http://127.0.0.1:8000/api/getCart/", {
+        params: {
+          id: id,
+        },
+        headers: {
+          Authorization: `JWT ${localStorage.getItem("access")}`,
+        },
+      });
+      console.log(res.data);
+      return res.data;
+    } catch (error) {
+      return error.data;
+    }
+  }
+});
+
 const auth = createSlice({
   name: "auth",
   initialState,
@@ -197,7 +236,9 @@ const auth = createSlice({
       state.access = null;
       state.refresh = null;
       state.isAuthenticate = false;
-      state.user = null;
+      state.user = false;
+      state.cart = false;
+      state.isStaff = false;
     },
   },
   extraReducers: (builder) => {
@@ -233,6 +274,12 @@ const auth = createSlice({
       })
       .addCase(userLoaded.rejected, (state) => {
         state.user = null;
+      })
+      .addCase(checkStaff.fulfilled, (state, action) => {
+        state.isStaff = action.payload;
+      })
+      .addCase(checkStaff.rejected, (state) => {
+        state.isStaff = false;
       })
       .addCase(checkAuthenticated.pending, (state) => {
         state.isAuthenticate = undefined;
@@ -290,6 +337,15 @@ const auth = createSlice({
       .addCase(verify.fulfilled, (state, action) => {
         state.verifyLoading = false;
         state.verifyState = true;
+      })
+      .addCase(getCart.pending, (state, action) => {
+        state.cart = null;
+      })
+      .addCase(getCart.rejected, (state, action) => {
+        state.cart = false;
+      })
+      .addCase(getCart.fulfilled, (state, action) => {
+        state.cart = action.payload;
       });
   },
 });

@@ -9,3 +9,14 @@ const productsApi = axios.create({
 // This function sends a GET request to the specified endpoint ("/") using the productsApi instance
 // This request retrieves all products from the API
 export const getAllProducts = () => productsApi.get("/");
+
+export const getAllProductsClient = () =>
+  productsApi.get("http://127.0.0.1:8000/api/getProductClient/");
+
+export const getIdProducts = (id) => {
+  return productsApi.get("/", {
+    params: {
+      id: id,
+    },
+  });
+};

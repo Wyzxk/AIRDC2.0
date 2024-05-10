@@ -142,13 +142,13 @@ const Login = () => {
               <Link to="/reset-password"> ¿Olvidaste tu contraseña?</Link>
             </p>
             {/* Terms and Conditions */}
-            <p className="text-gray-600 text-xs text-center mt-4">
+            {/* <p className="text-gray-600 text-xs text-center mt-4">
               By clicking Register, you agree to accept Apex Financial's
               <a href="#" className="text-blue-500 hover:underline">
                 Terms and Conditions
               </a>
               .
-            </p>
+            </p> */}
           </form>
         </div>
       </div>

@@ -118,3 +118,17 @@ def infoUser(request):
             return Response(status=404)
     else: 
         return Response(status=404)
+    
+@api_view(["GET"])
+def checkStaff(request):
+    if request.method == "GET":
+        user = request.user
+        if user:
+            id = request.query_params.get('id')
+            isStaff = user.is_staff
+            return Response(isStaff,status=200)
+        else:
+            data = "No hay usuario"
+            return Response(data, status=404)
+    else:
+        return Response(status=404)

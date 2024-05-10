@@ -1,10 +1,10 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Product from "./pages/Product";
+import ManageProducts from "./pages/ManageProducts";
 import Contact from "./pages/Contact";
 import About from "./pages/About";
 import AuthProfile from "./pages/AuthProfile";
-
 import Activate from "./authPages/Activate";
 import Login from "./authPages/Login";
 import ResetPassword from "./authPages/ResetPassword";
@@ -32,6 +32,10 @@ function App() {
 
           <Route exact path="/productos" Component={Product} />
           <Route exact path="/productos/:id" Component={Product} />
+
+          <Route exact path="/manageproducts" Component={ManageProducts} />
+          <Route exact path="/manageproducts/:id" Component={ManageProducts} />
+
           <Route exact path="/nosotros" Component={About} />
         </Routes>
       </Layout>

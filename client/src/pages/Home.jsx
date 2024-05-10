@@ -5,6 +5,8 @@ import "../styles/index.css";
 import { ContactForm } from "../components/ContactForm";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const images = [
@@ -21,10 +23,17 @@ const Home = () => {
       thumbnail: "https://picsum.photos/id/1018/1250/720/",
     },
   ];
+  const state = useSelector((state) => state.auth);
 
+  const { user, isAuthenticate, isStaff, loading } = state;
+  const navigate = useNavigate();
   useEffect(() => {
+    if (isStaff) {
+      console.log("staff");
+      navigate("/manageproducts");
+    }
     console.log(localStorage.getItem("user"));
-  }, []);
+  }, [isStaff]);
 
   return (
     <>
@@ -75,7 +84,7 @@ const Home = () => {
             <div className="cursor-pointer rounded-lg bg-white p-2 shadow duration-150 hover:scale-105 hover:shadow-md">
               <img
                 className="w-full rounded-lg object-cover object-center"
-                src="https://images.unsplash.com/photo-1511556532299-8f662fc26c06?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                src="/home/filtro.jpg"
                 alt="product"
               />
               <p className="my-4 pl-4 font-bold text-gray-500">
@@ -95,7 +104,7 @@ const Home = () => {
             <div className="cursor-pointer rounded-lg bg-white p-2 shadow duration-150 hover:scale-105 hover:shadow-md">
               <img
                 className="w-full rounded-lg object-cover object-center"
-                src="https://images.unsplash.com/photo-1511556532299-8f662fc26c06?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                src="/home/compresor.png"
                 alt="product"
               />
               <p className="my-4 pl-4 font-bold text-gray-500">Compresor</p>
@@ -113,30 +122,12 @@ const Home = () => {
             <div className="cursor-pointer rounded-lg bg-white p-2 shadow duration-150 hover:scale-105 hover:shadow-md">
               <img
                 className="w-full rounded-lg object-cover object-center"
-                src="https://images.unsplash.com/photo-1511556532299-8f662fc26c06?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                src="/home/Evaporador.jpg"
                 alt="product"
               />
               <p className="my-4 pl-4 font-bold text-gray-500">Evaporador</p>
               <p className="mb-4 ml-4 text-xl font-semibold text-gray-800">
                 $300.000
-              </p>
-              <button className="bg-black hover:bg-gray-500 text-white font-bold rounded-full px-5 py-1 mb-2 ml-3">
-                Comprar
-              </button>
-            </div>
-          </div>
-
-          {/* Tarjeta 4 */}
-          <div className="mx-2 my-2 flex-none max-w-xs sm:max-w-sm md:max-w-md lg:max-w-md xl:max-w-md">
-            <div className="cursor-pointer rounded-lg bg-white p-2 shadow duration-150 hover:scale-105 hover:shadow-md">
-              <img
-                className="w-full rounded-lg object-cover object-center"
-                src="https://images.unsplash.com/photo-1511556532299-8f662fc26c06?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                alt="product"
-              />
-              <p className="my-4 pl-4 font-bold text-gray-500">Compresor</p>
-              <p className="mb-4 ml-4 text-xl font-semibold text-gray-800">
-                $1.800.000
               </p>
               <button className="bg-black hover:bg-gray-500 text-white font-bold rounded-full px-5 py-1 mb-2 ml-3">
                 Comprar
@@ -160,7 +151,7 @@ const Home = () => {
               <div className="cursor-pointer rounded-lg bg-white p-2 shadow duration-150 hover:scale-105 hover:shadow-md relative">
                 <img
                   className="rounded-lg object-cover object-center maximize-img"
-                  src="https://images.unsplash.com/photo-1511556532299-8f662fc26c06?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                  src="/home/Compresor2.jpg"
                   alt="product"
                 />
                 <h1 className="absolute bottom-4 left-2 text-white text-3xl bg-opacity-50 px-2 py-1 rounded-md">
@@ -174,7 +165,7 @@ const Home = () => {
               <div className="cursor-pointer rounded-lg bg-white p-2 shadow duration-150 hover:scale-105 hover:shadow-md relative">
                 <img
                   className="rounded-lg object-cover object-center maximize-img"
-                  src="https://images.unsplash.com/photo-1511556532299-8f662fc26c06?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                  src="/home/filtro2.jpg"
                   alt="product"
                 />
                 <h1 className="absolute bottom-4 left-2 text-white text-3xl bg-opacity-50 px-2 py-1 rounded-md">
