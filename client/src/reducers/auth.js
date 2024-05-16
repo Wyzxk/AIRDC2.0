@@ -9,6 +9,7 @@ const initialState = {
   user: null,
   loading: false,
   cart: null,
+  cartCounter: null,
 };
 
 export const userLoaded = createAsyncThunk(
@@ -240,6 +241,9 @@ const auth = createSlice({
       state.cart = false;
       state.isStaff = false;
     },
+    changeCounter(state) {
+      state.cartCounter = state.cartCounter + 1;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -350,5 +354,5 @@ const auth = createSlice({
   },
 });
 
-export const { logout } = auth.actions;
+export const { logout, changeCounter } = auth.actions;
 export default auth.reducer;

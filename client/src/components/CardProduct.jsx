@@ -1,7 +1,15 @@
 import { useNavigate } from "react-router-dom";
 import { changeStatus, editProduct } from "../Api/ManageProducts";
+import { useSelector, useDispatch } from "react-redux";
+import { addToCart } from "../Api/CartUser";
+import { changeCounter } from "../reducers/auth";
 
 export function CardProduct({ name, price, index, edit, image, data }) {
+  const state = useSelector((state) => state.auth);
+
+  // Destructuring user object from the state
+  const { user, isAuthenticate, cartCounter } = state;
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   return (
     <>
@@ -85,14 +93,54 @@ export function CardProduct({ name, price, index, edit, image, data }) {
               )}
             </>
           ) : (
-            <button
-              onClick={() => {
-                navigate(`/productos/${index}`);
-              }}
-              class=" bg-gray-900 dark:bg-gray-600 text-white py-2 px-6 rounded-full font-bold hover:bg-gray-800 dark:hover:bg-gray-700"
-            >
-              Comprar
-            </button>
+            <>
+              <div class="flex items-center mt-6">
+                <button
+                  onClick={() => {
+                    navigate(`/productos/${index}`);
+                  }}
+                  class=" bg-gray-900 dark:bg-gray-600 text-white py-2 px-6 rounded-full font-bold hover:bg-gray-800 dark:hover:bg-gray-700"
+                >
+                  Comprar
+                </button>
+                <button
+                  class="mx-2 text-gray-600 border rounded-md p-2 hover:bg-gray-200 focus:outline-none"
+                  onClick={() => {
+                    if (isAuthenticate && user) {
+                      data = {
+                        idUser: user.id,
+                        idProduct: index,
+                        quantity: 1,
+                      };
+                      addToCart(data)
+                        .then(() => {
+                          dispatch(changeCounter());
+
+                          alert(
+                            "Se ha agregado el producto correctamente al carrito"
+                          );
+                        })
+                        .catch(() => {
+                          alert("El producto ya se encuentra en el carrito");
+                        });
+                    } else {
+                    }
+                  }}
+                >
+                  <svg
+                    class="h-5 w-5"
+                    fill="none"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                  </svg>
+                </button>
+              </div>
+            </>
           )}
         </div>
       </div>

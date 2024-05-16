@@ -1,20 +1,23 @@
 import { Link, useNavigate } from "react-router-dom";
 import { Dropdown, Navbar as Nav } from "flowbite-react";
-import { logout } from "../reducers/auth";
+import { logout, getCart, changeCounter } from "../reducers/auth";
 import { useSelector, useDispatch } from "react-redux";
 // import { getCart } from "../Api/CartUser";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getAllProducts } from "../Api/Products";
-import { getCart } from "../reducers/auth";
-
+import {
+  addQuantityCart,
+  getTotalCart,
+  RemoveQuantityCart,
+} from "../Api/CartUser";
 function Navbar() {
   const navigate = useNavigate();
   // Accessing the state from the Redux store
   const state = useSelector((state) => state.auth);
 
   // Destructuring user object from the state
-  const { user, isAuthenticate, cart } = state;
-
+  const { user, isAuthenticate, cart, cartCounter } = state;
+  const [total, setTotal] = useState();
   function carRedirect() {
     if (!user && !isAuthenticate) {
       navigate("/login");
@@ -23,8 +26,17 @@ function Navbar() {
   useEffect(() => {
     if (isAuthenticate === true && user) {
       dispatch(getCart(user.id));
+      getTotalCart()
+        .then((response) => {
+          setTotal(response.data);
+        })
+        .catch((error) => {
+          console.log("holaErrro");
+          console.log(error);
+        });
     }
-  }, [isAuthenticate, user]);
+    console.log("holaCartcounter");
+  }, [isAuthenticate, user, cartCounter]);
   // Dispatching actions to the Redux store
   const dispatch = useDispatch();
   const clik = () => {
@@ -108,7 +120,22 @@ function Navbar() {
                               {product.productName}
                             </h3>
                             <div className="flex items-center mt-2">
-                              <button className="text-gray-500 focus:outline-none focus:text-gray-600">
+                              <button
+                                className="text-gray-500 focus:outline-none focus:text-gray-600"
+                                onClick={() => {
+                                  let data = {
+                                    cartId: product.id,
+                                    quantity: product.quantity + 1,
+                                  };
+                                  addQuantityCart(data)
+                                    .then((response) => {
+                                      dispatch(changeCounter());
+                                    })
+                                    .catch((error) => {
+                                      console.log(error);
+                                    });
+                                }}
+                              >
                                 <svg
                                   className="h-5 w-5"
                                   fill="none"
@@ -121,8 +148,31 @@ function Navbar() {
                                   <path d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                 </svg>
                               </button>
-                              <span className="text-gray-700 mx-2">2</span>
-                              <button className="text-gray-500 focus:outline-none focus:text-gray-600">
+                              <span className="text-gray-700 mx-2">
+                                {product.quantity}
+                              </span>
+                              <button
+                                className="text-gray-500 focus:outline-none focus:text-gray-600"
+                                onClick={() => {
+                                  let data = {
+                                    cartId: product.id,
+                                    quantity: product.quantity - 1,
+                                  };
+                                  RemoveQuantityCart(data)
+                                    .then((response) => {
+                                      if (
+                                        response.data ===
+                                        "Se ha eliminado el producto del carro"
+                                      ) {
+                                        alert(response.data);
+                                      }
+                                      dispatch(changeCounter());
+                                    })
+                                    .catch((error) => {
+                                      console.log(error);
+                                    });
+                                }}
+                              >
                                 <svg
                                   className="h-5 w-5"
                                   fill="none"
@@ -139,12 +189,17 @@ function Navbar() {
                           </div>
                         </div>
                         <span className="text-gray-600">
-                          ${product.productPrice.toLocaleString()}
+                          ${product.total.toLocaleString()}
                         </span>
                       </div>
                     ))}
                     {/* Repite este bloque para cada elemento de producto */}
                   </div>
+                  {total && (
+                    <p className="pt-2">
+                      <b>Total: </b>${total.toLocaleString()}
+                    </p>
+                  )}
 
                   <button class="w-full mt-4 bg-gray-900 dark:bg-gray-600 text-white py-2 px-4 rounded-full font-bold hover:bg-gray-800 dark:hover:bg-gray-700">
                     Comprar ahora

@@ -14,7 +14,14 @@ urlpatterns = [
     path('addProduct/', views.addProduct),
     path('statusProduct/',views.statusProduct),
     path('getCart/',views.getCart),
+    path('getTotalCart/',views.getTotalCart),
+    
     path('getProductClient/',views.getProductClient),
+    path('addToCart/',views.addToCart),
+    
+    path('addQuantityCart/',views.addQuantityCart),
+    path('RemoveQuantityCart/',views.RemoveQuantityCart),
+    
     
     
 ]
