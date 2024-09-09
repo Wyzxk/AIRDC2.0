@@ -28,6 +28,7 @@ class Cart(models.Model):
 class Delivery(models.Model):
     descript = models.TextField()
     idUser = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100, default=None)
     amount = models.CharField(max_length=100)  
     doctype = models.CharField(max_length=10) 
     phone = models.CharField(max_length=11)

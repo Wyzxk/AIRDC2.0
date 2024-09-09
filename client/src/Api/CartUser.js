@@ -44,3 +44,15 @@ export const getTotalCart = () => {
     },
   });
 };
+// New API endpoint to remove all items from the cart
+export const removeAllCart = () => {
+  return axios.post(
+    "http://127.0.0.1:8000/api/removeAllCart/",
+    {},
+    {
+      headers: {
+        Authorization: `JWT ${localStorage.getItem("access")}`,
+      },
+    }
+  );
+};

@@ -1,5 +1,8 @@
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { redirect, useLocation } from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast";
+import { removeAllCart } from "../Api/CartUser";
 import { useState, useEffect } from "react";
 import { ContactForm } from "../components/ContactForm";
 import { changeUser, insertInfo, getInfo, putInfo } from "../Api/ProfilePage";
@@ -101,6 +104,10 @@ const CheckOut = () => {
         });
     }
   }, [user, params.id]);
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const status = queryParams.get("status");
+
   useEffect(() => {
     if (params.id) {
       if (paymentInfo[0]) {
@@ -124,13 +131,29 @@ const CheckOut = () => {
       // Establecer el estado de paymentInfo si es necesario
       setPaymentInfo(payment);
     }
+    // Verificar los parámetros en la URL y mostrar notificaciones
   }, [payment]);
   const handler = window.ePayco.checkout.configure({
     key: "fe4948f42e61a8c969b6c6a8f302adfc", // Reemplaza con tu clave pública
     test: true, // Cambia a false para producción
   });
   // Datos de la transacción
-
+  useEffect(() => {
+    if (status) {
+      if (status === "true") {
+        removeAllCart();
+        toast.success("Pago confirmado, revisa tu Gmail");
+        setTimeout(() => {
+          navigate("/");
+        }, 1000);
+      } else if (status === "false") {
+        toast.error("Pago denegado");
+        setTimeout(() => {
+          navigate("/");
+        }, 1000);
+      }
+    }
+  }, []);
   // Abrir el checkout cuando sea necesario, por ejemplo, en un evento de click
   const openCheckout = () => {
     const randomInvoiceNumber = Math.floor(Math.random() * 9000) + 1000;
@@ -187,6 +210,7 @@ const CheckOut = () => {
     const newData = {
       descript: data.description,
       idUser: user.id,
+      name: userInfo.names,
       amount: data.amount,
       doctype: data.type_doc_billing,
       phone: data.mobilephone_billing,
@@ -214,7 +238,7 @@ const CheckOut = () => {
     });
   };
   const ver = () => {
-    console.log(total);
+    alert(params.status);
     console.log(paymentInfo[0].productPrice);
     const data = {
       idUser: "10",
@@ -231,6 +255,8 @@ const CheckOut = () => {
   return (
     <>
       <Navbar />
+      <Toaster />
+
       <div className="min-w-screen min-h-screen bg-gray-50 py-5 mt-10">
         {/* <button onClick={() => ver()}>ver pues</button> */}
 

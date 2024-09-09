@@ -63,5 +63,7 @@ footer h1{
     position: relative; /* Cambiado a relative para que los elementos hijos se posicionen relativamente a este iframe */
     z-index: 0;
   }
-  
+  .forTable {
+    width: 1000px; /* ajusta el valor según tus necesidades */
+  }
   /* checkout */

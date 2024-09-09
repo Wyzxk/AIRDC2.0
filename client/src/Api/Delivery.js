@@ -46,6 +46,14 @@ export const getIdDeliveryData = (id) => {
     },
   });
 };
+// Get all delivery data (Admin)
+export const getAllDeliveryData = () => {
+  return urlDelivery.get("/", {
+    headers: {
+      Authorization: `JWT ${localStorage.getItem("access")}`,
+    },
+  });
+};
 export const updateDelivery = (data) => {
   return urlDelivery.put("/", data, {
     headers: {

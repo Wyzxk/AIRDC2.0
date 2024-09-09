@@ -281,7 +281,20 @@ def RemoveQuantityCart(request):
             return Response(status=400)
     else: 
         return Response(status=404)
-    
+ 
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def RemoveAllCart(request):
+    if request.method == 'POST':
+        user = request.user
+        if user.is_authenticated:
+            # Elimina todos los objetos del carrito del usuario autenticado
+            Cart.objects.filter(idUser=user).delete()
+            return Response("Todos los productos han sido eliminados del carrito.", status=200)
+        else:
+            return Response("Usuario no autenticado.", status=401)
+    else:
+        return Response(status=404)   
     
 @api_view(['GET'])
 def getTotalCart(request):
@@ -309,6 +322,7 @@ def addDelivery(request):
         transaction = request.data.get('idPedido')
         status = request.data.get('status')
         new_address = request.data.get('address')
+        statusDelivery = request.data.get('statusDelivery')
         if idUser and transaction and status:
             try:
                 delivery = Delivery.objects.get(idUser=idUser, transaction=transaction)
@@ -322,7 +336,11 @@ def addDelivery(request):
         else:
             if new_address:
                 try:
+                    print (idUser)
+                    print (transaction)
                     delivery = Delivery.objects.get(idUser=request.data.get('idUser'), transaction=request.data.get('idPedido'))
+                    if statusDelivery:
+                        delivery.deliveryStatus = statusDelivery
                     delivery.address = new_address
                     delivery.save()
                     serializer = DeliverySerializer(delivery)
@@ -342,14 +360,13 @@ def addDelivery(request):
 
     elif request.method == 'GET':
         id = request.query_params.get('id')
-        print(id)
         if id:
             deliveries = Delivery.objects.filter(idUser=id)
             serializer = DeliverySerializer(deliveries, many=True)
             return Response(serializer.data, status=200)
         else:
-            return Response({"error": "Se requiere el parámetro id"}, status=400)
-
-    else:
-        return Response({"error": "Método no permitido"}, status=405)
+            # Get all deliveries where paymentStatus is true and deliveryStatus is 'Por enviar'
+            deliveries = Delivery.objects.all()
+            serializer = DeliverySerializer(deliveries, many=True)
+            return Response(serializer.data, status=200)
     

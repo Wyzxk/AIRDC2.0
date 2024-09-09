@@ -5,6 +5,7 @@ import { AddressPage } from "../components/AddressPage";
 import { PasswordPage } from "../components/PasswordPage";
 import { ProfilePage } from "../components/ProfilePage";
 import { PedidosUser } from "../components/PedidosUser";
+import { DeliveryAdmin } from "../components/DeliveryAdmin";
 
 import { logout } from "../reducers/auth";
 
@@ -139,6 +140,19 @@ function AuthProfile() {
                       </a>
                     </li>
                   )}
+                  {isStaff === true && (
+                    <li>
+                      <a
+                        className="text-center block px-4 py-2.5  font-semibold  hover:bg-gray-900 text-white rounded-lg bg-black"
+                        href="#"
+                        onClick={() => {
+                          handlePage("AdminPedidos");
+                        }}
+                      >
+                        Administrar Pedidos
+                      </a>
+                    </li>
+                  )}
 
                   <li>
                     <a
@@ -182,6 +196,8 @@ function AuthProfile() {
             <PasswordPage />
           ) : page === "pedidos" ? (
             <PedidosUser />
+          ) : page === "AdminPedidos" ? (
+            <DeliveryAdmin />
           ) : (
             <>
               <h1>Esta página no está disponible </h1>

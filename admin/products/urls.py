@@ -21,9 +21,9 @@ urlpatterns = [
     
     path('addQuantityCart/',views.addQuantityCart),
     path('RemoveQuantityCart/',views.RemoveQuantityCart),
+    path('removeAllCart/',views.RemoveAllCart),
     
     path('addDelivery/',views.addDelivery),
-    
     
     
 ]
