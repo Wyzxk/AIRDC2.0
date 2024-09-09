@@ -83,6 +83,7 @@ export function ProfilePage() {
   // Handler function for form submission to update or insert user information
   const onSubmit = (e) => {
     e.preventDefault();
+    localStorage.removeItem("userNot");
     setMessage("Enviando...");
     // Checking if user information already exists
     if (userInfo.exists) {
@@ -118,8 +119,14 @@ export function ProfilePage() {
   };
   return (
     <>
+      <h1 className="text-4xl pb-16">Mi perfil</h1>
       {/* Form for updating user profile information */}
       <form onSubmit={onSubmit}>
+        {localStorage.getItem("userNot") && (
+          <h1 className="text-red-600">
+            Tienes que rellenar este formulario primero
+          </h1>
+        )}
         {/* Grid layout for profile information fields */}
         <div className="grid grid-cols-1  md:grid-cols-1 xl:grid-cols-2 gap-4">
           {/* Input field for user's names */}

@@ -145,8 +145,11 @@ STATICFILES_DIRS = [
 
 # CORS
 CORS_ALLOWED_ORIGINS = [
-'http://localhost:5173',
-'https://web.postman.co/'
+    'http://localhost:5173',
+    'http://127.0.0.1:3000',
+    'https://web.postman.co',  
+    'https://delicate-melba-b47259.netlify.app',
+    'https://jhon123456.pythonanywhere.com',
 ]
 
 #REST FRAMEWORK 
@@ -195,8 +198,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # AUTH_USER_MODEL = 'accounts.UserAccount'
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173"
-]
 
 MEDIA_ROOT = '../client/public'

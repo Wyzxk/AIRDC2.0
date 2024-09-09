@@ -67,6 +67,8 @@ export function PasswordPage() {
 
   return (
     <>
+      <h1 className="text-4xl pb-16">Configuración</h1>
+
       {/* Form Username */}
       <form
         onSubmit={onSubmitName}

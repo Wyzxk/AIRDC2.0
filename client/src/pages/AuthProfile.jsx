@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { AddressPage } from "../components/AddressPage";
 import { PasswordPage } from "../components/PasswordPage";
 import { ProfilePage } from "../components/ProfilePage";
+import { PedidosUser } from "../components/PedidosUser";
 
 import { logout } from "../reducers/auth";
 
@@ -19,7 +20,7 @@ function AuthProfile() {
     if (isAuthenticate === false) {
       navigate("/");
     }
-    console.log(isStaff + "hola");
+    console.log(isStaff + "holaStaff");
   }, [isAuthenticate, user]);
 
   // Using useNavigate hook to navigate
@@ -93,9 +94,26 @@ function AuthProfile() {
                       </a>
                     </li>
                   )}
-
                   {isStaff === false && (
                     <li>
+                      <a
+                        className="text-center block px-4 py-2.5  font-semibold  hover:bg-gray-900 text-white rounded-lg bg-black"
+                        href="#"
+                        onClick={() => {
+                          handlePage("pedidos");
+                        }}
+                      >
+                        Mis pedidos
+                      </a>
+                    </li>
+                  )}
+                  {isStaff === false && (
+                    <li>
+                      {localStorage.getItem("userANot") && (
+                        <p className="text-center text-red-600">
+                          Debes rellenar este formulario
+                        </p>
+                      )}
                       <a
                         className="text-center block px-4 py-2.5  font-semibold  hover:bg-gray-900 text-white rounded-lg bg-black"
                         href="#"
@@ -107,6 +125,7 @@ function AuthProfile() {
                       </a>
                     </li>
                   )}
+
                   {isStaff === true && (
                     <li>
                       <a
@@ -161,9 +180,11 @@ function AuthProfile() {
             </>
           ) : page === "contraseña" ? (
             <PasswordPage />
+          ) : page === "pedidos" ? (
+            <PedidosUser />
           ) : (
             <>
-              <h1>hola errror </h1>
+              <h1>Esta página no está disponible </h1>
             </>
           )}
         </div>

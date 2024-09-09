@@ -78,6 +78,7 @@ export function AddressPage() {
       // If user address doesn't exist, insert a new address
       insertUserAddress(dataForm)
         .then((response) => {
+          localStorage.removeItem("userANot");
           setAddresState("Enviado Correctamente");
         })
         .catch((error) => {
@@ -94,6 +95,8 @@ export function AddressPage() {
 
   return (
     <>
+      <h1 className="text-4xl pb-16">Dirección de envíos</h1>
+
       <form onSubmit={onSubmit}>
         <div className="grid grid-cols-1  md:grid-cols-1 xl:grid-cols-2 gap-4">
           {/* departament */}

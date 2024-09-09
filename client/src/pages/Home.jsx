@@ -5,8 +5,10 @@ import "../styles/index.css";
 import { ContactForm } from "../components/ContactForm";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Product from "../pages/Product";
+import { changeCategory } from "../reducers/auth";
 
 const Home = () => {
   const images = [
@@ -24,7 +26,7 @@ const Home = () => {
     },
   ];
   const state = useSelector((state) => state.auth);
-
+  const dispatch = useDispatch();
   const { user, isAuthenticate, isStaff, loading } = state;
   const navigate = useNavigate();
   useEffect(() => {
@@ -38,7 +40,7 @@ const Home = () => {
   return (
     <>
       <Navbar />
-      <div className="w-full h-full flex justify-center items-center relative fail">
+      <div className="w-full h-full relative mt-16" id="Home">
         <div className="w-full mx-auto">
           <ImageGallery
             items={images}
@@ -54,15 +56,17 @@ const Home = () => {
                 <img
                   src={item.original}
                   alt={item.originalAlt}
-                  className="object-cover w-full sm:h-96 md:h-96 lg:h-128 xl:h-128 fail"
+                  className="object-cover w-full custom-height"
                 />
-                <div className="text-center absolute bottom-20">
+                {/* Capa superpuesta */}
+                <div className="absolute top-0 left-0 w-full h-full bg-black opacity-50"></div>
+                <div className="text-center absolute bottom-30 z-10">
                   <h1 className="text-3xl sm:text-4xl md:text-4xl lg:text-5xl xl:text-5xl text-white">
-                    Refresca tu viaje <br />
-                    con nuestros productos
+                    Compra los productos de calidad <br></br>y eficiencia en el
+                    aire acondicionado automotríz
                   </h1>
-                  <button className="bg-black shadow-lg shadow-gray-900 hover:bg-blue-800 text-white font-bold rounded px-10 py-5 mt-5">
-                    Comprar
+                  <button className=" bg-gray-900 dark:bg-gray-600 text-white py-6 px-14 rounded-full font-bold hover:bg-gray-800 dark:hover:bg-gray-700 mt-8">
+                    <a href="#ProductPage">Ver productos</a>
                   </button>
                 </div>
               </div>
@@ -72,114 +76,152 @@ const Home = () => {
       </div>
 
       {/* Container */}
-      <div className="min-h-screen items-center justify-center bg-gray-100 flex-col grid grid-cols-1 pb-20">
-        <h1 className="mt-14 text-5xl text-center font-bold mb-20 text-gray-800">
-          Los productos más destacados <br />
-          de nosotros
-        </h1>
-        {/* scroll aqui overflow x */}
-        <div className="flex overflow-x-auto px-4">
-          {/* Tarjeta 1 */}
-          <div className="mx-2 my-2 flex-none max-w-xs sm:max-w-sm md:max-w-md lg:max-w-md xl:max-w-md">
-            <div className="cursor-pointer rounded-lg bg-white p-2 shadow duration-150 hover:scale-105 hover:shadow-md">
-              <img
-                className="w-full rounded-lg object-cover object-center"
-                src="/home/filtro.jpg"
-                alt="product"
-              />
-              <p className="my-4 pl-4 font-bold text-gray-500">
-                Filtro de aire
-              </p>
-              <p className="mb-4 ml-4 text-xl font-semibold text-gray-800">
-                $50.000
-              </p>
-              <button className="bg-black hover:bg-gray-500 text-white font-bold rounded-full px-5 py-1 mb-2 ml-3">
-                Comprar
-              </button>
+      <div className="min-h-screen flex items-center justify-center bg-gray-100">
+        <div className="flex flex-col items-center justify-center pb-20">
+          <h1 className="mt-14 text-5xl text-center font-bold mb-20 text-gray-800">
+            Los productos más destacados <br />
+            de nosotros
+          </h1>
+          {/* scroll aqui overflow x */}
+          <div className="flex overflow-x-auto px-4">
+            {/* Tarjeta 1 */}
+            <div className="mx-auto my-2 flex-none max-w-xs sm:max-w-sm md:max-w-md lg:max-w-md xl:max-w-md p-2">
+              <div className="cursor-pointer rounded-lg bg-white p-2 shadow duration-150 hover:scale-105 hover:shadow-md">
+                <img
+                  className="w-full rounded-lg object-cover object-center"
+                  src="/home/filtro.jpg"
+                  alt="product"
+                />
+                <div className="my-4 pl-4 font-bold text-gray-700 text-center">
+                  {" "}
+                  {/* Alineación horizontal centrada */}
+                  Filtros de aire
+                </div>
+                <div className="flex justify-center">
+                  {" "}
+                  {/* Alineación horizontal centrada */}
+                  <button
+                    onClick={() => {
+                      dispatch(changeCategory(4));
+                    }}
+                    className="bg-gray-900 dark:bg-gray-600 text-white py-2 px-20 rounded-full font-bold hover:bg-gray-800 dark:hover:bg-gray-700"
+                  >
+                    <a href="#ProductPage">Ver más</a>
+                  </button>
+                </div>
+              </div>
             </div>
-          </div>
 
-          {/* Tarjeta 2 */}
-          <div className="mx-2 my-2 flex-none max-w-xs sm:max-w-sm md:max-w-md lg:max-w-md xl:max-w-md">
-            <div className="cursor-pointer rounded-lg bg-white p-2 shadow duration-150 hover:scale-105 hover:shadow-md">
-              <img
-                className="w-full rounded-lg object-cover object-center"
-                src="/home/compresor.png"
-                alt="product"
-              />
-              <p className="my-4 pl-4 font-bold text-gray-500">Compresor</p>
-              <p className="mb-4 ml-4 text-xl font-semibold text-gray-800">
-                $1.800.000
-              </p>
-              <button className="bg-black hover:bg-gray-500 text-white font-bold rounded-full px-5 py-1 mb-2 ml-3">
-                Comprar
-              </button>
+            {/* Tarjeta 2 */}
+            <div className="mx-auto my-2 flex-none max-w-xs sm:max-w-sm md:max-w-md lg:max-w-md xl:max-w-md p-2">
+              <div className="cursor-pointer rounded-lg bg-white p-2 shadow duration-150 hover:scale-105 hover:shadow-md">
+                <img
+                  className="w-full rounded-lg object-cover object-center"
+                  src="/home/compresor.png"
+                  alt="product"
+                />
+                <div className="my-4 pl-4 font-bold text-gray-700 text-center">
+                  {" "}
+                  {/* Alineación horizontal centrada */}
+                  Compresores
+                </div>
+                <div className="flex justify-center">
+                  {" "}
+                  {/* Alineación horizontal centrada */}
+                  <button
+                    onClick={() => {
+                      dispatch(changeCategory(1));
+                    }}
+                    className="bg-gray-900 dark:bg-gray-600 text-white py-2 px-20 rounded-full font-bold hover:bg-gray-800 dark:hover:bg-gray-700"
+                  >
+                    <a href="#ProductPage">Ver más</a>
+                  </button>
+                </div>
+              </div>
             </div>
-          </div>
 
-          {/* Tarjeta 3 */}
-          <div className="mx-2 my-2 flex-none max-w-xs sm:max-w-sm md:max-w-md lg:max-w-md xl:max-w-md">
-            <div className="cursor-pointer rounded-lg bg-white p-2 shadow duration-150 hover:scale-105 hover:shadow-md">
-              <img
-                className="w-full rounded-lg object-cover object-center"
-                src="/home/Evaporador.jpg"
-                alt="product"
-              />
-              <p className="my-4 pl-4 font-bold text-gray-500">Evaporador</p>
-              <p className="mb-4 ml-4 text-xl font-semibold text-gray-800">
-                $300.000
-              </p>
-              <button className="bg-black hover:bg-gray-500 text-white font-bold rounded-full px-5 py-1 mb-2 ml-3">
-                Comprar
-              </button>
+            {/* Tarjeta 3 */}
+            <div className="mx-auto my-2 flex-none max-w-xs sm:max-w-sm md:max-w-md lg:max-w-md xl:max-w-md p-2">
+              <div className="cursor-pointer rounded-lg bg-white p-2 shadow duration-150 hover:scale-105 hover:shadow-md">
+                <img
+                  className="w-full rounded-lg object-cover object-center"
+                  src="/home/Evaporador.jpg"
+                  alt="product"
+                />
+                <div className="my-4 pl-4 font-bold text-gray-700 text-center">
+                  {" "}
+                  {/* Alineación horizontal centrada */}
+                  Evaporadores
+                </div>
+                <div className="flex justify-center">
+                  {" "}
+                  {/* Alineación horizontal centrada */}
+                  <button
+                    onClick={() => {
+                      dispatch(changeCategory(2));
+                    }}
+                    className="bg-gray-900 dark:bg-gray-600 text-white py-2 px-20 rounded-full font-bold hover:bg-gray-800 dark:hover:bg-gray-700"
+                  >
+                    <a href="#ProductPage">Ver más</a>
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
       {/* End Container */}
-
+      <div id="ProductPage" className="mt-5">
+        <br></br>
+        <br></br>
+        <br></br>
+        <Product />
+      </div>
       {/* Container */}
       <div className="min-h-screen flex items-center justify-center bg-gray-100 flex-col pb-20">
         <h1 className="mt-14 text-5xl text-center font-bold mb-20 text-gray-800">
           Compra ahora con <br />
           descuento
         </h1>
-        <div className="container">
+        <div className="container mx-auto">
           <div className="flex flex-wrap justify-center">
             {/* Tarjeta 1 */}
-            <div className="mx-16  max-w-md sm:max-w-md md:w-1/2 lg:w-1/3 xl:w-1/3">
+            <div className="mx-4 max-w-md sm:max-w-md md:w-1/2 lg:w-1/3 xl:w-1/3">
+              <h1 className="text-center text-black text-3xl backdrop-filter backdrop-blur-lg bg-opacity-50 px-2 py-1 rounded-md mt-2">
+                Hasta 15% de descuento en compresores
+              </h1>
               <div className="cursor-pointer rounded-lg bg-white p-2 shadow duration-150 hover:scale-105 hover:shadow-md relative">
                 <img
-                  className="rounded-lg object-cover object-center maximize-img"
-                  src="/home/Compresor2.jpg"
+                  style={{ height: "450px" }} // Establecer una altura fija para las imágenes
+                  className="rounded-lg object-cover object-center w-full"
+                  src="/home/CompresorTwo.jpg"
                   alt="product"
                 />
-                <h1 className="absolute bottom-4 left-2 text-white text-3xl bg-opacity-50 px-2 py-1 rounded-md">
-                  Hasta 15% de descuento en compresores
-                </h1>
               </div>
             </div>
 
             {/* Tarjeta 2 */}
-            <div className="mx-16  max-w-md sm:max-w-md md:w-1/2 lg:w-1/3 xl:w-1/3">
+            <div className="mx-4 max-w-md sm:max-w-md md:w-1/2 lg:w-1/3 xl:w-1/3">
+              <h1 className="text-center text-black text-3xl backdrop-filter backdrop-blur-lg bg-opacity-50 px-2 py-1 rounded-md mt-2">
+                Hasta 10% de descuento en filtros
+              </h1>
               <div className="cursor-pointer rounded-lg bg-white p-2 shadow duration-150 hover:scale-105 hover:shadow-md relative">
                 <img
-                  className="rounded-lg object-cover object-center maximize-img"
+                  style={{ height: "450px" }} // Establecer la misma altura para las imágenes
+                  className="rounded-lg object-cover object-center w-full"
                   src="/home/filtro2.jpg"
                   alt="product"
                 />
-                <h1 className="absolute bottom-4 left-2 text-white text-3xl bg-opacity-50 px-2 py-1 rounded-md">
-                  Hasta 10% de descuento en filtros
-                </h1>
               </div>
             </div>
           </div>
         </div>
       </div>
+
       {/* End Container */}
 
       {/*  Container */}
-      <div id="about" className="shop">
+      <div id="AboutPage" className="shop">
         <div className="container mx-auto px-4 my-8 rounded-lg">
           <div className="flex flex-col lg:flex-row items-center">
             {/* Columna de la imagen */}
@@ -216,7 +258,13 @@ const Home = () => {
       {/* End Container */}
 
       {/* Container */}
-      <ContactForm />
+      <div id="ContactPage" className="relative">
+        <div className="relative z-10">
+          <br />
+          <ContactForm />
+        </div>
+      </div>
+z
       <Footer />
     </>
   );

@@ -22,6 +22,8 @@ urlpatterns = [
     path('addQuantityCart/',views.addQuantityCart),
     path('RemoveQuantityCart/',views.RemoveQuantityCart),
     
+    path('addDelivery/',views.addDelivery),
+    
     
     
 ]

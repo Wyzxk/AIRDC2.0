@@ -10,6 +10,8 @@ const initialState = {
   loading: false,
   cart: null,
   cartCounter: null,
+  category: null,
+  payment: null,
 };
 
 export const userLoaded = createAsyncThunk(
@@ -240,9 +242,18 @@ const auth = createSlice({
       state.user = false;
       state.cart = false;
       state.isStaff = false;
+      state.cartCounter = false;
+      state.category = false;
     },
     changeCounter(state) {
       state.cartCounter = state.cartCounter + 1;
+    },
+    changeCategory(state, action) {
+      console.log(action.payload);
+      state.category = action.payload;
+    },
+    sendPayment(state) {
+      state.payment = JSON.parse(localStorage.getItem("cart"));
     },
   },
   extraReducers: (builder) => {
@@ -354,5 +365,6 @@ const auth = createSlice({
   },
 });
 
-export const { logout, changeCounter } = auth.actions;
+export const { logout, changeCounter, changeCategory, sendPayment } =
+  auth.actions;
 export default auth.reducer;

@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { Dropdown, Navbar as Nav } from "flowbite-react";
-import { logout, getCart, changeCounter } from "../reducers/auth";
+import { logout, getCart, changeCounter, sendPayment } from "../reducers/auth";
 import { useSelector, useDispatch } from "react-redux";
 // import { getCart } from "../Api/CartUser";
 import { useEffect, useState } from "react";
@@ -10,6 +10,8 @@ import {
   getTotalCart,
   RemoveQuantityCart,
 } from "../Api/CartUser";
+import toast, { Toaster } from "react-hot-toast";
+
 function Navbar() {
   const navigate = useNavigate();
   // Accessing the state from the Redux store
@@ -46,12 +48,20 @@ function Navbar() {
       console.log("no");
     }
   };
+  const notifyCartOk = () => toast.success("Se ha agregado al carrito");
+  const notifyCartBad = () =>
+    toast.error("Se ha eliminado el producto del carrito");
+
   // Function to handle logout
   const handleClick = () => {
     dispatch(logout());
   };
   return (
-    <Nav fluid rounded className="m-3">
+    <Nav
+      fluid
+      rounded
+      className="fixed top-0 inset-x-0 bg-white shadow-md py-3 px-4 z-50"
+    >
       {/* Brand/logo */}
       <Nav.Brand href="/">
         <img
@@ -164,7 +174,7 @@ function Navbar() {
                                         response.data ===
                                         "Se ha eliminado el producto del carro"
                                       ) {
-                                        alert(response.data);
+                                        notifyCartBad();
                                       }
                                       dispatch(changeCounter());
                                     })
@@ -201,7 +211,16 @@ function Navbar() {
                     </p>
                   )}
 
-                  <button class="w-full mt-4 bg-gray-900 dark:bg-gray-600 text-white py-2 px-4 rounded-full font-bold hover:bg-gray-800 dark:hover:bg-gray-700">
+                  <button
+                    onClick={() => {
+                      // Guardar la información del carrito en localStorage
+                      localStorage.setItem("cart", JSON.stringify(cart)); // Guardar el carrito como JSON
+                      console.log(JSON.parse(localStorage.getItem("cart"))); // Ejemplo de cómo acceder al carrito guardado
+                      dispatch(sendPayment());
+                      navigate("/checkout");
+                    }}
+                    className="w-full mt-4 bg-gray-900 dark:bg-gray-600 text-white py-2 px-4 rounded-full font-bold hover:bg-gray-800 dark:hover:bg-gray-700"
+                  >
                     Comprar ahora
                   </button>
                 </>
@@ -315,10 +334,10 @@ function Navbar() {
       </div>
       <Nav.Collapse>
         {/* Navigation links */}
-        <Link to="/"> Inicio </Link>
-        <Link to="/nosotros">Nosotros</Link>
-        <Link to="/productos">Productos</Link>
-        <Link to="/contactanos">Contáctanos</Link>
+        <a href="/#Home">Inicio</a>
+        <a href="/#ProductPage">Productos</a>
+        <a href="/#AboutPage">Nosotros</a>
+        <a href="/#ContactPage">Contactanos</a>
       </Nav.Collapse>
     </Nav>
   );

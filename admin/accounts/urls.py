@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .views import insertUserAddress,changePassword,changeUser,infoUser,checkStaff
+from .views import insertUserAddress,changePassword,changeUser,infoUser,checkStaff,check
 
 urlpatterns = [
     path('',include('djoser.urls')),
@@ -9,6 +9,7 @@ urlpatterns = [
     path('changeUser/', changeUser),
     path('changePassword/', changePassword),
     path('userInfo/', infoUser),
-    path('checkStaff/', checkStaff)
+    path('checkStaff/', checkStaff),
+    path('check/', check)
 ]
 

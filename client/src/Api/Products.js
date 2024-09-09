@@ -20,3 +20,11 @@ export const getIdProducts = (id) => {
     },
   });
 };
+
+export const getCategoryProducts = (id) => {
+  return axios.get("http://127.0.0.1:8000/api/getProductClient/", {
+    params: {
+      category: id,
+    },
+  });
+};

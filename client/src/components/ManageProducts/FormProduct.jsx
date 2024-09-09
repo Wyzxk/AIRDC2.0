@@ -5,7 +5,7 @@ import { getIdProducts } from "../../Api/Products";
 import { useParams } from "react-router-dom";
 
 // Import additional API functions and components
-import { getCategory } from "../../Api/ManageCategory";
+import { getCategoryAct } from "../../Api/ManageCategory";
 
 // Define the FormProduct component
 export function FormProduct() {
@@ -38,7 +38,7 @@ export function FormProduct() {
   }, [productData]);
   // useEffect hook to fetch category data from the API and update state
   useEffect(() => {
-    getCategory()
+    getCategoryAct(true)
       .then((response) => {
         setCategory(response.data);
       })
@@ -113,6 +113,11 @@ export function FormProduct() {
   };
   return (
     <>
+      {params.id ? (
+        <h1 className="text-4xl pb-10">Editador de productos</h1>
+      ) : (
+        <h1 className="text-4xl pb-10">Registro de productos</h1>
+      )}
       {/* Form for adding/editing product */}
       <form id="formularioP" onSubmit={onSubmit} encType="multipart/form-data">
         {/* Container for form fields */}

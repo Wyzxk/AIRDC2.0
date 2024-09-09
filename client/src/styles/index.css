@@ -11,7 +11,7 @@ h1{
   }
 
 *{
-    font-size: 17px;
+    font-size: 14px;
     font-family: "Roboto", sans-serif;
   }
 
@@ -41,3 +41,27 @@ footer h1{
     margin: 0 auto; /* Centra la imagen horizontalmente */
   }
   
+  html {
+    scroll-behavior: smooth;
+  }
+  .custom-height {
+    height: 500px; /* ajusta el valor según tus necesidades */
+  }
+
+  .container {
+    position: relative; /* Cambiado a relative para que los elementos hijos se posicionen relativamente a este contenedor */
+    z-index: 1;
+  }
+  
+  #contact {
+    position: absolute; /* Posicionamiento absoluto para colocar los elementos sobre el iframe */
+    top: 100px; /* Ajusta según sea necesario */
+    left: 100px; /* Ajusta según sea necesario */
+  }
+  
+  iframe {
+    position: relative; /* Cambiado a relative para que los elementos hijos se posicionen relativamente a este iframe */
+    z-index: 0;
+  }
+  
+  /* checkout */

@@ -11,6 +11,8 @@ import ResetPassword from "./authPages/ResetPassword";
 import ResetPasswordConfirm from "./authPages/ResetPasswordConfirm";
 import Signup from "./authPages/Signup";
 import Layout from "./hocs/Layout";
+import CheckOut from "./pages/CheckOut";
+import DeliveryTrue from "./components/Delivery/DeliveryTrue";
 
 function App() {
   return (
@@ -37,6 +39,10 @@ function App() {
           <Route exact path="/manageproducts/:id" Component={ManageProducts} />
 
           <Route exact path="/nosotros" Component={About} />
+          <Route exact path="/checkout" Component={CheckOut} />
+          <Route exact path="/checkout/:id" Component={CheckOut} />
+
+          <Route exact path="/checkout/true/:id" Component={DeliveryTrue} />
         </Routes>
       </Layout>
     </Router>

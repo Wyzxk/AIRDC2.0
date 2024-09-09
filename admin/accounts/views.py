@@ -1,8 +1,9 @@
 from django.contrib.auth import get_user_model
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view,permission_classes
 from .models import UserAddress,InfoUser
 from .serializers import userAddressSerializer, UserInfoSerializer
+from rest_framework.permissions import AllowAny
 
 @api_view(['GET', 'POST', 'PUT'])
 def insertUserAddress(request):
@@ -130,5 +131,24 @@ def checkStaff(request):
         else:
             data = "No hay usuario"
             return Response(data, status=404)
+    else:
+        return Response(status=404)
+
+@api_view(["POST"])
+@permission_classes([AllowAny])
+def check(request):
+    if request.method == 'POST':
+       idUser = request.data.get('idUser')
+       idPedido = request.data.get('idPedido')
+       status = request.data.get('status')
+       if idUser:
+           print("holaaaaaaaaaaaaaa")
+           print(idUser)
+           print(idPedido)
+           print(status)
+           return Response({'message': 'Datos recibidos correctamente'})  # Ejemplo de respuesta exitosa
+       else: 
+           print('nada')
+           return Response({'message': 'Faltan parámetros'}, status=400)  # Ejemplo de respuesta con error
     else:
         return Response(status=404)

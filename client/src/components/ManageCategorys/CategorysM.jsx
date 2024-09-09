@@ -22,6 +22,7 @@ export function CategorysM() {
         <h1>{params.id}</h1>
       ) : (
         <>
+          <h1 className="text-4xl text-center p-10">Categorias</h1>
           <div class="overflow-hidden rounded-lg border border-gray-200 shadow-md m-5 overflow-x-auto">
             <table class="w-full border-collapse bg-white text-left text-sm text-gray-500">
               <thead class="bg-gray-50">
@@ -32,6 +33,9 @@ export function CategorysM() {
 
                   <th scope="col" class="px-6 py-4 font-medium text-gray-900">
                     Descripción categoria
+                  </th>
+                  <th scope="col" class="px-6 py-4 font-medium text-gray-900">
+                    Estado
                   </th>
                   <th
                     scope="col"
@@ -58,6 +62,17 @@ export function CategorysM() {
                       </div>
                     </td>
                     <td class="px-6 py-4">
+                      <div class="flex gap-2">
+                        <span class="inline-flex items-center gap-1 rounded-full bg-blue-50 px-2 py-1 text-xs font-semibold text-blue-600">
+                          {category.categoryStatus ? (
+                            <>Activo</>
+                          ) : (
+                            <>Inactivo</>
+                          )}
+                        </span>
+                      </div>
+                    </td>
+                    <td class="px-6 py-4">
                       <div class="flex justify-end gap-4">
                         <a
                           x-data="{ tooltip: 'Delete' }"
@@ -73,21 +88,40 @@ export function CategorysM() {
                               });
                           }}
                         >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="currentColor"
-                            class="h-6 w-6"
-                            x-tooltip="tooltip"
-                          >
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                            />
-                          </svg>
+                          {category.categoryStatus ? (
+                            <>
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 18"
+                                stroke-width="0.8"
+                                stroke="currentColor"
+                                class="h-7 w-7"
+                                x-tooltip="tooltip"
+                              >
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708" />
+                              </svg>
+                            </>
+                          ) : (
+                            <>
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 18"
+                                stroke-width="0.8"
+                                stroke="currentColor"
+                                class="h-7 w-8"
+                                x-tooltip="tooltip"
+                              >
+                                <path
+                                  fill-rule="evenodd"
+                                  d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2z"
+                                />
+                                <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466" />
+                              </svg>
+                            </>
+                          )}
                         </a>
                         <a
                           x-data="{ tooltip: 'Edite' }"

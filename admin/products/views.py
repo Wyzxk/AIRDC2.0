@@ -2,8 +2,8 @@ from django.shortcuts import render
 from django.contrib.auth.models import User
 from rest_framework.decorators import api_view,permission_classes
 from rest_framework.response import Response
-from .models import Product,CategoryProduct,Cart
-from .serializer import ProductSerializer, CategorySelializer,CartSerializer
+from .models import Product,CategoryProduct,Cart,Delivery
+from .serializer import ProductSerializer, CategorySelializer,CartSerializer,DeliverySerializer
 from rest_framework.permissions import AllowAny
 
 # Create your views here.
@@ -13,8 +13,11 @@ from rest_framework.permissions import AllowAny
 def getCategory(request):
     if request.method == 'GET':
         id = request.query_params.get('id')
+        status = request.query_params.get('status')
         if id:
             category = CategoryProduct.objects.filter(id=id)
+        elif status:
+            category = CategoryProduct.objects.filter(categoryStatus=True)
         else:
             category = CategoryProduct.objects.all()
         serializer = CategorySelializer(category, many=True)
@@ -48,7 +51,12 @@ def deleteCategory(request):
         id = request.data.get('id')
         if id:
             category = CategoryProduct.objects.get(id=id)
-            category.delete()
+            data = category.categoryStatus
+            if data == True:
+                category.categoryStatus = False
+            elif data == False:
+                category.categoryStatus = True
+            category.save()
             return Response(status=200,data=id)
         else:
             return Response(status=400)
@@ -73,8 +81,11 @@ def getProduct(request):
 def getProductClient(request):
     if request.method == 'GET':
         id = request.query_params.get('id')
+        category = request.query_params.get('category')
         if id:
             products = Product.objects.filter(id=id)
+        elif category:
+            products = Product.objects.filter(productCategory=category,productStatus=True)
         else:
             products = Product.objects.filter(productStatus=True).order_by('productCategory__categoryName')
         serializer = ProductSerializer(products, many=True)
@@ -287,3 +298,58 @@ def getTotalCart(request):
             total_quantity += cart_item.total  # Sumamos la cantidad del producto al total
             
         return Response(total_quantity,status=200)  # Enviamos el total como parte de la respuesta
+
+# Delivery
+
+@api_view(['POST', 'PUT', 'GET'])
+@permission_classes([AllowAny])
+def addDelivery(request):
+    if request.method == 'PUT':
+        idUser = request.data.get('idUser')
+        transaction = request.data.get('idPedido')
+        status = request.data.get('status')
+        new_address = request.data.get('address')
+        if idUser and transaction and status:
+            try:
+                delivery = Delivery.objects.get(idUser=idUser, transaction=transaction)
+                delivery.paymentStatus = status
+                delivery.deliveryStatus = "Por enviar"
+                delivery.save()
+                serializer = DeliverySerializer(delivery)
+                return Response(serializer.data, status=200)
+            except Delivery.DoesNotExist:
+                return Response({"error": "Entrega no encontrada"}, status=404)
+        else:
+            if new_address:
+                try:
+                    delivery = Delivery.objects.get(idUser=request.data.get('idUser'), transaction=request.data.get('idPedido'))
+                    delivery.address = new_address
+                    delivery.save()
+                    serializer = DeliverySerializer(delivery)
+                    return Response(serializer.data, status=200)
+                except Delivery.DoesNotExist:
+                    return Response({"error": "Entrega no encontrada"}, status=404)
+            else:
+                return Response({"error": "Se requiere el parámetro 'address'"}, status=400)
+
+    elif request.method == 'POST':
+        serializer = DeliverySerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=201)
+        else:
+            return Response(serializer.errors, status=400)
+
+    elif request.method == 'GET':
+        id = request.query_params.get('id')
+        print(id)
+        if id:
+            deliveries = Delivery.objects.filter(idUser=id)
+            serializer = DeliverySerializer(deliveries, many=True)
+            return Response(serializer.data, status=200)
+        else:
+            return Response({"error": "Se requiere el parámetro id"}, status=400)
+
+    else:
+        return Response({"error": "Método no permitido"}, status=405)
+    

@@ -187,6 +187,15 @@ export function ContactForm() {
                 </div>
               </form>
             </div>
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.4114570445986!2d-75.5702626258697!3d6.2093369767362105!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e4428299b5aa6d9%3A0x2020c055ff96b671!2sEl%20Poblado%2C%20Medell%C3%ADn%2C%20El%20Poblado%2C%20Medell%C3%ADn%2C%20Antioquia!5e0!3m2!1ses!2sco!4v1716308211926!5m2!1ses!2sco"
+              width="50%"
+              allowfullscreen=""
+              loading="lazy"
+              style={{ height: "620px" }} // Estilo para eliminar el borde del iframe
+              className=""
+              referrerpolicy="no-referrer-when-downgrade"
+            ></iframe>
           </div>
         </>
       )}

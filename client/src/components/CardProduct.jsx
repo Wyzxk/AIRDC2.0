@@ -3,9 +3,13 @@ import { changeStatus, editProduct } from "../Api/ManageProducts";
 import { useSelector, useDispatch } from "react-redux";
 import { addToCart } from "../Api/CartUser";
 import { changeCounter } from "../reducers/auth";
+import toast, { Toaster } from "react-hot-toast";
 
 export function CardProduct({ name, price, index, edit, image, data }) {
   const state = useSelector((state) => state.auth);
+  const notifyCartOk = () => toast.success("Se ha agregado al carrito");
+  const notifyCartBad = () =>
+    toast.error("El producto ya se encuentra en el carrito");
 
   // Destructuring user object from the state
   const { user, isAuthenticate, cartCounter } = state;
@@ -14,7 +18,12 @@ export function CardProduct({ name, price, index, edit, image, data }) {
   return (
     <>
       {/* Card */}
-      <div className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/4 p-2">
+      <Toaster />
+      <div
+        className={
+          edit ? "w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/4 p-2" : "w-full p-2"
+        }
+      >
         <div className="cursor-pointer rounded-lg bg-white p-4 shadow duration-150 hover:scale-105 hover:shadow-md">
           <img
             className="w-full h-48 rounded-lg object-cover object-center"
@@ -116,14 +125,13 @@ export function CardProduct({ name, price, index, edit, image, data }) {
                         .then(() => {
                           dispatch(changeCounter());
 
-                          alert(
-                            "Se ha agregado el producto correctamente al carrito"
-                          );
+                          notifyCartOk();
                         })
                         .catch(() => {
-                          alert("El producto ya se encuentra en el carrito");
+                          notifyCartBad();
                         });
                     } else {
+                      navigate("/login");
                     }
                   }}
                 >

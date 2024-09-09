@@ -47,3 +47,11 @@ export const deleteCategory = (data) => {
     },
   });
 };
+
+export const getCategoryAct = (data) => {
+  return urlCategory.get("/", {
+    params: {
+      status: data,
+    },
+  });
+};

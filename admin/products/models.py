@@ -23,7 +23,17 @@ class Cart(models.Model):
     idProduct=models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=0)
     total = models.IntegerField(default=0)
-    
-    
-    
-    
+
+
+class Delivery(models.Model):
+    descript = models.TextField()
+    idUser = models.ForeignKey(User, on_delete=models.CASCADE)
+    amount = models.CharField(max_length=100)  
+    doctype = models.CharField(max_length=10) 
+    phone = models.CharField(max_length=11)
+    docNumber = models.CharField(max_length=30)
+    email = models.EmailField()
+    address = models.CharField(max_length=200)
+    transaction = models.CharField(max_length=200, null=True)
+    paymentStatus = models.CharField(max_length=20)
+    deliveryStatus = models.CharField(max_length=20, default=False)

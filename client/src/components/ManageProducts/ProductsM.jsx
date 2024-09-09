@@ -62,6 +62,8 @@ export function ProductsM() {
         <h1>{params.id}</h1>
       ) : (
         <>
+          <h1 className="text-4xl text-center pb-8">Productos</h1>
+
           {/* Search Input */}
           <div className="max-w-sm mx-auto">
             <form>

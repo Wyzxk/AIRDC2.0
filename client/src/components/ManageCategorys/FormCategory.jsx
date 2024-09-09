@@ -70,6 +70,11 @@ export function FormCategory() {
   };
   return (
     <>
+      {params.id ? (
+        <h1 className="text-4xl pb-10">Editador de categorias</h1>
+      ) : (
+        <h1 className="text-4xl pb-10">Registro de categorias</h1>
+      )}
       {/* Form for adding/editing product */}
       <form id="formularioP" onSubmit={onSubmit} encType="multipart/form-data">
         {/* Container for form fields */}
@@ -93,16 +98,16 @@ export function FormCategory() {
               type="text"
               className="form-input px-4 py-2 border rounded-lg text-gray-700 focus:ring-blue-500"
               name="categoryName"
-              placeholder="Nombre del producto"
+              placeholder="Nombre de la categoria"
             />
           </div>
           {/* Input field for product code */}
           <div className="mb-3">
             <label className="block text-gray-700 text-sm font-semibold mb-2">
-              Codigo *{/* Error message for invalid code input */}
+              Descripción *{/* Error message for invalid code input */}
               {message.productCode && (
                 <p className="text-red-500 text-xs font-semibold mt-2">
-                  Introduce el código correctamente
+                  Introduce la descripción correctamente
                 </p>
               )}
             </label>
@@ -116,7 +121,7 @@ export function FormCategory() {
               onChange={onChange}
               type="text"
               className="form-input px-4 py-2 border rounded-lg text-gray-700 focus:ring-blue-500"
-              placeholder="Código del producto"
+              placeholder="Descripción de la categoria"
               name="categoryDescription"
             />
           </div>
